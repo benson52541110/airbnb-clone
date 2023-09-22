@@ -12,11 +12,17 @@ export default {
 			},
 			screens: {
 				sm: "550px",
-				md: "744px",
 				lg: "950px",
+				md: "744px",
 				xl: "1128px",
 			},
 		},
 	},
 	plugins: [],
+	variants: {
+		extend: {
+			borderColor: ["active"],
+			textColor: ["active"],
+		},
+	},
 };

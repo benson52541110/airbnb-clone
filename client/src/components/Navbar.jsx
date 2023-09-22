@@ -1,12 +1,22 @@
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import { Icon } from "@iconify/react";
-import searchIcon from "@iconify/icons-fa-solid/search";
-import globeIcon from "@iconify/icons-fa-solid/globe";
-import menuIcon from "@iconify/icons-mdi/menu";
+import Login from "./Login";
+
 const Navbar = () => {
+	const [modalIsOpen, setModalIsOpen] = useState(false);
+
+	const handleOpenModal = () => {
+		setModalIsOpen(true);
+	};
+
+	const handleCloseModal = () => {
+		setModalIsOpen(false);
+	};
 	return (
 		<>
 			<div className="items-center justify-between hidden h-20 border-b md:flex">
-				<div>
+				<div className="flex">
 					<div
 						className="w-8 h-8 bg-cover"
 						style={{ backgroundImage: `url('/assets/logo.svg')` }}
@@ -26,16 +36,22 @@ const Navbar = () => {
 					</div>
 
 					<div className="flex items-center justify-center rounded-full bg-primary aspect-square w-7 h-7">
-						<Icon icon={searchIcon} className="w-3 h-3 text-white " />
+						<Icon
+							icon="material-symbols:search"
+							className="w-3 h-3 text-white "
+						/>
 					</div>
 				</div>
 				<div className="flex items-center">
 					<div className="w-[148px]">Become a host</div>
 					<div className="bg-white w-[46px]">
-						<Icon icon={globeIcon} className="text-base" color="black" />
+						<Icon icon="ci:globe" className="text-base" color="black" />
 					</div>
-					<div className="flex items-center justify-between p-2 border rounded-3xl w-[77px]">
-						<Icon icon={menuIcon} width="16" height="16" />
+					<div
+						className="flex items-center justify-between p-2 border rounded-3xl w-[77px] cursor-pointer"
+						onClick={handleOpenModal}
+					>
+						<Icon icon="material-symbols:menu" width="16" height="16" />
 						<div
 							className="w-[30px] h-[30px] ml-3 rounded-full aspect-square bg-center"
 							style={{ backgroundImage: `url('/assets/guest.svg')` }}
@@ -46,7 +62,7 @@ const Navbar = () => {
 			<div className=" h-14 w-full mt-[14px] border rounded-2xl flex items-center px-5 py-2 justify-between md:hidden">
 				<div className="flex items-center">
 					<div>
-						<Icon icon={searchIcon} className="w-4 h-4" />
+						<Icon icon="material-symbols:search" className="w-4 h-4" />
 					</div>
 					<div className="flex flex-col ml-5">
 						<div className="text-sm font-semibold">Anywhere</div>
@@ -58,6 +74,7 @@ const Navbar = () => {
 					<Icon icon="system-uicons:filtering" />
 				</div>
 			</div>
+			<Login modalIsOpen={modalIsOpen} closeModal={handleCloseModal} />
 		</>
 	);
 };
