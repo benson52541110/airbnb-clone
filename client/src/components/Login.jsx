@@ -1,7 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import Modal from "react-modal";
 import { Icon } from "@iconify/react";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
 const customStyles = {
 	content: {
@@ -28,6 +30,8 @@ const Login = ({ modalIsOpen, closeModal }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isLogin, setIsLogin] = useState(true);
+	const [redirect, setRedirect] = useState(false);
+	const { setUser } = useContext(UserContext);
 	const subtitle = useRef(null);
 
 	const afterOpenModal = () => {
@@ -35,23 +39,36 @@ const Login = ({ modalIsOpen, closeModal }) => {
 			subtitle.current.parentElement.style.bottom = "20%";
 		}
 	};
-	const registerUser = (e) => {
+	const registerUser = async (e) => {
 		e.preventDefault();
-		axios.post("/register", {
-			name,
-			email,
-			password,
-		});
+		try {
+			await axios.post("/register", {
+				name,
+				email,
+				password,
+			});
+		} catch (err) {
+			alert("Register failed");
+		}
 	};
 
-	const loginUser = (e) => {
+	const loginUser = async (e) => {
 		e.preventDefault();
-		axios.post("/test", {
-			name,
-			email,
-			password,
-		});
+		try {
+			const { data } = await axios.post("/login", {
+				email,
+				password,
+			});
+			setRedirect(true);
+			setUser(data);
+		} catch (err) {
+			alert("Login failed");
+		}
 	};
+
+	if (redirect) {
+		return <Navigate to="/" />;
+	}
 
 	return (
 		<div>

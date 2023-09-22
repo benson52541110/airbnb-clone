@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Icon } from "@iconify/react";
+import { useNavigate } from "react-router-dom";
+
 import Login from "./Login";
+import { UserContext } from "../UserContext";
 
 const Navbar = () => {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
+	const { user } = useContext(UserContext);
+	const navigate = useNavigate();
 
 	const handleOpenModal = () => {
 		setModalIsOpen(true);
@@ -49,13 +54,20 @@ const Navbar = () => {
 					</div>
 					<div
 						className="flex items-center justify-between p-2 border rounded-3xl w-[77px] cursor-pointer"
-						onClick={handleOpenModal}
+						onClick={() => {
+							if (user) {
+								navigate("/account");
+							} else {
+								handleOpenModal();
+							}
+						}}
 					>
 						<Icon icon="material-symbols:menu" width="16" height="16" />
 						<div
 							className="w-[30px] h-[30px] ml-3 rounded-full aspect-square bg-center"
 							style={{ backgroundImage: `url('/assets/guest.svg')` }}
 						></div>
+						{!!user && <div>{user.name}</div>}
 					</div>
 				</div>
 			</div>
