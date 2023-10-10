@@ -7,7 +7,8 @@ import axios from "axios";
 import Account from "./pages/Account";
 import { UserContextProvider } from "./UserContext";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
+console.log(axios.defaults.baseURL);
 axios.defaults.withCredentials = true;
 function App() {
 	return (

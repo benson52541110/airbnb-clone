@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const UserModel = require("./models/User");
+const PlaceModel = require("./models/Place");
 const imageDownloader = require("image-downloader");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const multer = require("multer");
@@ -23,7 +24,7 @@ const bucket = "2023-airbnb-image";
 app.use(
 	cors({
 		credentials: true,
-		origin: "http://localhost:5173",
+		origin: "http://localhost:5174",
 	})
 );
 
@@ -31,8 +32,8 @@ async function uploadToS3(path, originalFilename, mimetype) {
 	const client = new S3Client({
 		region: "ap-southeast-2",
 		credentials: {
-			accessKeyId: "AKIA56MBTX6MND5RZLEA",
-			secretAccessKey: "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",
+			accessKeyId: process.env.S3_ACCESS_KEY,
+			secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
 		},
 	});
 	const parts = originalFilename.split(".");
@@ -44,7 +45,7 @@ async function uploadToS3(path, originalFilename, mimetype) {
 			Body: fs.readFileSync(path),
 			Key: newFilename,
 			ContentType: mimetype,
-			// ACL: "public-read",
+			ACL: "public-read",
 		})
 	);
 	return `https://${bucket}.s3.amazonaws.com/${newFilename}`;
@@ -140,6 +141,41 @@ app.post("/upload", photosMiddleware.array("photos", 100), async (req, res) => {
 	res.json(uploadedFiles);
 });
 
-app.listen(4000);
+app.post("/places", async (req, res) => {
+	mongoose.connect(process.env.MONGODB_URL);
+	const { token } = req.cookies;
+	console.log(req.body);
+	const {
+		title,
+		address,
+		addedPhotos,
+		description,
+		price,
+		perks,
+		extraInfo,
+		checkIn,
+		checkOut,
+		maxGuests,
+	} = req.body;
+	jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
+		if (err) throw err;
+		const placeDoc = await PlaceModel.create({
+			owner: userData.id,
+			price,
+			title,
+			address,
+			images: addedPhotos,
+			description,
+			perks,
+			extraInfo,
+			checkIn,
+			checkOut,
+			maxGuests,
+		});
+		res.json(placeDoc);
+	});
+});
+
+app.listen(4001);
 
 //m36BD05iirdV3DdS
