@@ -1,13 +1,10 @@
-import { Link, useParams } from "react-router-dom";
-import { Icon } from "@iconify/react";
-import { useState, useEffect } from "react";
+import PhotosUploader from "../components/PhotosUploader";
+import Perks from "../components/Perks";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
-import Perks from "./Perks";
-import PhotosUploader from "./ImageUpload";
+import { Navigate, useParams } from "react-router-dom";
 
-const Places = () => {
-	const { action } = useParams();
+export default function PlacesFormPage() {
 	const { id } = useParams();
 	const [title, setTitle] = useState("");
 	const [address, setAddress] = useState("");
@@ -86,20 +83,7 @@ const Places = () => {
 	}
 
 	return (
-		<>
-			{action === "new" ? (
-				<div className="text-center">new place</div>
-			) : (
-				<div className="text-center">
-					<Link
-						className="inline-flex items-center px-6 py-2 text-white rounded-full bg-primary"
-						to={"/account/places/new"}
-					>
-						<Icon icon="ic:baseline-plus" />
-						Add new places
-					</Link>
-				</div>
-			)}
+		<div>
 			<form onSubmit={savePlace}>
 				{preInput(
 					"Title",
@@ -166,7 +150,7 @@ const Places = () => {
 						/>
 					</div>
 					<div>
-						<h3 className="mt-2 -mb-1">Price per night</h3>
+						<h3 className="mt-2 -mb-1">Price night</h3>
 						<input
 							type="number"
 							value={price}
@@ -176,8 +160,6 @@ const Places = () => {
 				</div>
 				<button className="my-4 primary">Save</button>
 			</form>
-		</>
+		</div>
 	);
-};
-
-export default Places;
+}

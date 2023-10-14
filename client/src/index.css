@@ -1,12 +1,20 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-input[type="name"], input[type="email"], input[type="password"], input[type="text"], input[type="number"], textarea {
-    @apply block w-full px-4 py-2 my-2 leading-normal text-gray-700 border border-gray-300 rounded-2xl;
+input[type="text"],input[type="password"],
+input[type="email"],input[type="number"],
+input[type="tel"],
+textarea{
+    @apply w-full border my-1 py-2 px-3 rounded-2xl;
 }
-
-button.primary {
-    background-color: #F53850;
-    @apply bg-primary p-2 w-full rounded-2xl
+textarea{
+    height: 140px;
+}
+button{
+    @apply bg-gray-300;
+}
+button.primary{
+    background-color: #F5385D;
+    @apply bg-primary p-2 w-full text-white rounded-2xl;
 }

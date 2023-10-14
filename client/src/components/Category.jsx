@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/swiper-bundle.css";
+import "./Category.css";
 
 const Category = () => {
-	const [currentIndex, setCurrentIndex] = useState(0);
 	const [selectedSlide, setSelectedSlide] = useState(null);
-	const slideShift = 5; // 按一次箭頭滑動的數量
 	const slides = [
 		{ icon: <Icon icon="carbon:home" className="text-2xl" />, text: "Minsus" },
 		{
@@ -65,58 +67,33 @@ const Category = () => {
 		},
 	];
 
-	const goNext = () => {
-		if (currentIndex + slideShift < slides.length) {
-			setCurrentIndex(currentIndex + slideShift);
-		}
-	};
-
-	const goPrev = () => {
-		if (currentIndex - slideShift >= 0) {
-			setCurrentIndex(currentIndex - slideShift);
-		}
-	};
-
 	return (
 		<div className="flex items-center h-20">
-			{currentIndex > 0 && (
-				<button onClick={goPrev} className="p-1 border-2 rounded-full">
-					<Icon icon="ri:arrow-left-s-line" className="text-2xl" />
-				</button>
-			)}
-			<div className="flex w-full h-full space-x-2 overflow-hidden">
-				<div
-					className="flex transition-transform duration-300 ease-in-out"
-					style={{
-						transform: `translateX(-${(currentIndex * 100) / slides.length}%)`,
-					}}
-				>
-					{slides.map((slide, index) => (
+			<Swiper
+				modules={[Navigation, Pagination]}
+				navigation
+				spaceBetween={8}
+				slidesPerView={15}
+				onSlideChange={(swiper) => {
+					// 你可以在這裡做一些當 slide 改變時需要做的事情
+				}}
+			>
+				{slides.map((slide, index) => (
+					<SwiperSlide key={index}>
 						<div
-							className="flex-none w-[calc(100%/9)] flex items-center justify-center gap-2 cursor-pointer   "
-							key={index}
+							className={`flex flex-col items-center justify-center h-full gap-1 text-center cursor-pointer ${
+								selectedSlide === index
+									? "border-b-2 text-black border-black"
+									: "text-gray-600"
+							}`}
 							onClick={() => setSelectedSlide(index)}
 						>
-							<div
-								className={`flex flex-col items-center justify-center h-full gap-1 text-center hover:border-b-2 hover:border-gray-600 hover:text-black ${
-									selectedSlide === index
-										? "border-b-2 text-black border-black"
-										: "text-gray-600"
-								}`}
-							>
-								{slide.icon}
-								<div className="text">{slide.text}</div>
-							</div>
+							{slide.icon}
+							<div className="text">{slide.text}</div>
 						</div>
-					))}
-				</div>
-			</div>
-			{currentIndex <
-				slides.length - (slides.length % slideShift || slideShift) && (
-				<button onClick={goNext} className="p-1 border-2 rounded-full">
-					<Icon icon="ri:arrow-right-s-line" className="text-2xl" />
-				</button>
-			)}
+					</SwiperSlide>
+				))}
+			</Swiper>
 		</div>
 	);
 };

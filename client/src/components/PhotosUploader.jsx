@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
-import Image from "./Image.jsx";
-const PhotosUploader = ({ addedPhotos, onChange }) => {
+import Image from "./Image";
+
+export default function PhotosUploader({ addedPhotos, onChange }) {
 	const [photoLink, setPhotoLink] = useState("");
 	async function addPhotoByLink(ev) {
 		ev.preventDefault();
@@ -145,6 +146,4 @@ const PhotosUploader = ({ addedPhotos, onChange }) => {
 			</div>
 		</>
 	);
-};
-
-export default PhotosUploader;
+}
