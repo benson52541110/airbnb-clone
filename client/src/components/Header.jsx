@@ -20,13 +20,7 @@ export default function Header() {
 		setRedirect("/");
 		setUser(null);
 	}
-	// if (ready && !user && !redirect) {
-	// 	return <Navigate to={"/login"} />;
-	// }
 
-	// if (redirect) {
-	// 	return <Navigate to={redirect} />;
-	// }
 	return (
 		<header className="flex items-center justify-center w-full h-20 border-b md:justify-between">
 			<Link to={"/"} className="flex items-center gap-1">

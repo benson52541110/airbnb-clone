@@ -84,7 +84,7 @@ app.post("/api/register", async (req, res) => {
 });
 
 app.post("/api/login", async (req, res) => {
-	mongoose.connect(process.env.MONGO_URL);
+	mongoose.connect(process.env.MONGO_URL).catch((err) => console.log(err));
 	const { email, password } = req.body;
 	const userDoc = await User.findOne({ email });
 	if (userDoc) {

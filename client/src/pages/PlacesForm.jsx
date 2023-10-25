@@ -1,163 +1,163 @@
-import PhotosUploader from "../components/PhotosUploader";
-import Perks from "../components/Perks";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Navigate, useParams } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
+import PhotosUploader from "../components/PhotosUploader";
+import Perks from "../components/Perks";
 
 export default function PlacesFormPage() {
 	const { id } = useParams();
-	const [title, setTitle] = useState("");
-	const [address, setAddress] = useState("");
-	const [addedPhotos, setAddedPhotos] = useState([]);
-	const [description, setDescription] = useState("");
-	const [perks, setPerks] = useState([]);
-	const [extraInfo, setExtraInfo] = useState("");
-	const [checkIn, setCheckIn] = useState("");
-	const [checkOut, setCheckOut] = useState("");
-	const [maxGuests, setMaxGuests] = useState(1);
-	const [price, setPrice] = useState(100);
+	const { handleSubmit, control, setValue } = useForm({
+		defaultValues: {
+			title: "",
+			address: "",
+			addedPhotos: [],
+			description: "",
+			perks: [],
+			extraInfo: "",
+			checkIn: "",
+			checkOut: "",
+			maxGuests: "",
+			price: "",
+		},
+	});
 	const [redirect, setRedirect] = useState(false);
-	useEffect(() => {
-		if (!id) {
-			return;
-		}
-		axios.get("/places/" + id).then((response) => {
-			const { data } = response;
-			setTitle(data.title);
-			setAddress(data.address);
-			setAddedPhotos(data.photos);
-			setDescription(data.description);
-			setPerks(data.perks);
-			setExtraInfo(data.extraInfo);
-			setCheckIn(data.checkIn);
-			setCheckOut(data.checkOut);
-			setMaxGuests(data.maxGuests);
-			setPrice(data.price);
-		});
-	}, [id]);
-	function inputHeader(text) {
-		return <h2 className="mt-4 text-2xl">{text}</h2>;
-	}
-	function inputDescription(text) {
-		return <p className="text-sm text-gray-500">{text}</p>;
-	}
-	function preInput(header, description) {
-		return (
-			<>
-				{inputHeader(header)}
-				{inputDescription(description)}
-			</>
-		);
-	}
 
-	async function savePlace(ev) {
-		ev.preventDefault();
-		const placeData = {
-			title,
-			address,
-			addedPhotos,
-			description,
-			perks,
-			extraInfo,
-			checkIn,
-			checkOut,
-			maxGuests,
-			price,
-		};
+	useEffect(() => {
 		if (id) {
-			// update
-			await axios.put("/places", {
-				id,
-				...placeData,
+			axios.get("/places/" + id).then((response) => {
+				const { data } = response;
+				console.log(response);
+				for (const [key, value] of Object.entries(data)) {
+					setValue(key, value);
+				}
 			});
-			setRedirect(true);
-		} else {
-			// new place
-			await axios.post("/places", placeData);
-			setRedirect(true);
 		}
-	}
+	}, [id, setValue]);
+	const onSubmit = async (data) => {
+		if (id) {
+			await axios.put("/places/", { id, ...data });
+		} else {
+			await axios.post("/places", data);
+		}
+		setRedirect(true);
+	};
 
 	if (redirect) {
-		return <Navigate to={"/account/places"} />;
+		return <Navigate to="/account/places" />;
 	}
 
 	return (
 		<div>
-			<form onSubmit={savePlace}>
-				{preInput(
-					"Title",
-					"Title for your place. should be short and catchy as in advertisement"
-				)}
-				<input
-					type="text"
-					value={title}
-					onChange={(ev) => setTitle(ev.target.value)}
-					placeholder="title, for example: My lovely apt"
+			<form onSubmit={handleSubmit(onSubmit)}>
+				{/* For Title */}
+				<h2 className="mt-4 text-2xl">Title</h2>
+				<p className="text-sm text-gray-500">
+					Title for your place. Should be short and catchy as in advertisement
+				</p>
+				<Controller
+					name="title"
+					control={control}
+					render={({ field }) => (
+						<input
+							{...field}
+							type="text"
+							placeholder="Title, for example: My lovely apt"
+						/>
+					)}
 				/>
-				{preInput("Address", "Address to this place")}
-				<input
-					type="text"
-					value={address}
-					onChange={(ev) => setAddress(ev.target.value)}
-					placeholder="address"
+
+				{/* For Address */}
+				<h2 className="mt-4 text-2xl">Address</h2>
+				<p className="text-sm text-gray-500">Address to this place</p>
+				<Controller
+					name="address"
+					control={control}
+					render={({ field }) => (
+						<input {...field} type="text" placeholder="Address" />
+					)}
 				/>
-				{preInput("Photos", "more = better")}
-				<PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
-				{preInput("Description", "description of the place")}
-				<textarea
-					value={description}
-					onChange={(ev) => setDescription(ev.target.value)}
+
+				{/* For Photos */}
+				<h2 className="mt-4 text-2xl">Photos</h2>
+				<p className="text-sm text-gray-500">More = better</p>
+				<Controller
+					name="addedPhotos"
+					control={control}
+					render={({ field }) => (
+						<PhotosUploader
+							addedPhotos={field.value}
+							onChange={field.onChange}
+						/>
+					)}
 				/>
-				{preInput("Perks", "select all the perks of your place")}
+
+				{/* For Description */}
+				<h2 className="mt-4 text-2xl">Description</h2>
+				<p className="text-sm text-gray-500">Description of the place</p>
+				<Controller
+					name="description"
+					control={control}
+					render={({ field }) => <textarea {...field} />}
+				/>
+
+				{/* For Perks */}
+				<h2 className="mt-4 text-2xl">Perks</h2>
+				<p className="text-sm text-gray-500">
+					Select all the perks of your place
+				</p>
 				<div className="grid grid-cols-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
-					<Perks selected={perks} onChange={setPerks} />
+					<Controller
+						name="perks"
+						control={control}
+						render={({ field }) => {
+							return <Perks perks={field.value} onChange={field.onChange} />;
+						}}
+					/>
 				</div>
-				{preInput("Extra info", "house rules, etc")}
-				<textarea
-					value={extraInfo}
-					onChange={(ev) => setExtraInfo(ev.target.value)}
+
+				{/* For Extra Info */}
+				<h2 className="mt-4 text-2xl">Extra Info</h2>
+				<p className="text-sm text-gray-500">House rules, etc</p>
+				<Controller
+					name="extraInfo"
+					control={control}
+					render={({ field }) => <textarea {...field} />}
 				/>
-				{preInput(
-					"Check in&out times",
-					"add check in and out times, remember to have some time window for cleaning the room between guests"
-				)}
+
+				{/* For Check In & Check Out Times */}
+				<h2 className="mt-4 text-2xl">Check In & Out Times</h2>
+				<p className="text-sm text-gray-500">
+					Add check in and out times, remember to have some time window for
+					cleaning the room between guests
+				</p>
 				<div className="grid grid-cols-2 gap-2 md:grid-cols-4">
-					<div>
-						<h3 className="mt-2 -mb-1">Check in time</h3>
-						<input
-							type="text"
-							value={checkIn}
-							onChange={(ev) => setCheckIn(ev.target.value)}
-							placeholder="14"
-						/>
-					</div>
-					<div>
-						<h3 className="mt-2 -mb-1">Check out time</h3>
-						<input
-							type="text"
-							value={checkOut}
-							onChange={(ev) => setCheckOut(ev.target.value)}
-							placeholder="11"
-						/>
-					</div>
-					<div>
-						<h3 className="mt-2 -mb-1">Max number of guests</h3>
-						<input
-							type="number"
-							value={maxGuests}
-							onChange={(ev) => setMaxGuests(ev.target.value)}
-						/>
-					</div>
-					<div>
-						<h3 className="mt-2 -mb-1">Price night</h3>
-						<input
-							type="number"
-							value={price}
-							onChange={(ev) => setPrice(ev.target.value)}
-						/>
-					</div>
+					<Controller
+						name="checkIn"
+						control={control}
+						render={({ field }) => (
+							<input {...field} type="text" placeholder="14" />
+						)}
+					/>
+					<Controller
+						name="checkOut"
+						control={control}
+						render={({ field }) => (
+							<input {...field} type="text" placeholder="11" />
+						)}
+					/>
+					<Controller
+						name="maxGuests"
+						control={control}
+						render={({ field }) => <input {...field} type="number" />}
+					/>
+					<Controller
+						name="price"
+						control={control}
+						render={({ field }) => <input {...field} type="number" />}
+					/>
 				</div>
+
 				<button className="my-4 primary">Save</button>
 			</form>
 		</div>

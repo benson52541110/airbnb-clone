@@ -4,6 +4,7 @@ import Image from "./Image";
 
 export default function PhotosUploader({ addedPhotos, onChange }) {
 	const [photoLink, setPhotoLink] = useState("");
+	console.log(addedPhotos);
 	async function addPhotoByLink(ev) {
 		ev.preventDefault();
 		const { data: filename } = await axios.post("/upload-by-link", {
@@ -56,7 +57,7 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
 				</button>
 			</div>
 			<div className="grid grid-cols-3 gap-2 mt-2 md:grid-cols-4 lg:grid-cols-6">
-				{addedPhotos.length > 0 &&
+				{addedPhotos?.length > 0 &&
 					addedPhotos.map((link) => (
 						<div className="relative flex h-32" key={link}>
 							<Image

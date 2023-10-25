@@ -74,9 +74,7 @@ const Category = () => {
 				navigation
 				spaceBetween={8}
 				slidesPerView={15}
-				onSlideChange={(swiper) => {
-					// 你可以在這裡做一些當 slide 改變時需要做的事情
-				}}
+				onSlideChange={(swiper) => {}}
 			>
 				{slides.map((slide, index) => (
 					<SwiperSlide key={index}>
