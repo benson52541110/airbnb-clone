@@ -1,5 +1,4 @@
 export default function Perks({ perks, onChange }) {
-	console.log(perks);
 	function handleCbClick(ev) {
 		const { checked, name } = ev.target;
 		if (checked) {

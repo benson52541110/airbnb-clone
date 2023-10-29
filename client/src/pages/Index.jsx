@@ -6,11 +6,13 @@ import Category from "../components/Category.jsx";
 
 export default function IndexPage() {
 	const [places, setPlaces] = useState([]);
+
 	useEffect(() => {
 		axios.get("/places").then((response) => {
 			setPlaces(response.data);
 		});
 	}, []);
+
 	return (
 		<div>
 			<Category></Category>

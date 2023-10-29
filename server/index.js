@@ -106,7 +106,7 @@ app.post("/api/login", async (req, res) => {
 			res.status(422).json("pass not ok");
 		}
 	} else {
-		res.json("not found");
+		res.status(404).json("not found");
 	}
 });
 
@@ -197,7 +197,6 @@ app.post("/api/places", (req, res) => {
 			checkOut,
 			maxGuests,
 		});
-		console.log(placeDoc);
 		res.json(placeDoc);
 	});
 });

@@ -4,7 +4,6 @@ import Image from "./Image";
 
 export default function PhotosUploader({ addedPhotos, onChange }) {
 	const [photoLink, setPhotoLink] = useState("");
-	console.log(addedPhotos);
 	async function addPhotoByLink(ev) {
 		ev.preventDefault();
 		const { data: filename } = await axios.post("/upload-by-link", {
@@ -44,7 +43,7 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
 		<>
 			<div className="flex gap-2">
 				<input
-					value={photoLink}
+					value={photoLink || ""}
 					onChange={(ev) => setPhotoLink(ev.target.value)}
 					type="text"
 					placeholder={"Add using a link ....jpg"}

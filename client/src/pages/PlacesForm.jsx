@@ -27,13 +27,13 @@ export default function PlacesFormPage() {
 		if (id) {
 			axios.get("/places/" + id).then((response) => {
 				const { data } = response;
-				console.log(response);
 				for (const [key, value] of Object.entries(data)) {
-					setValue(key, value);
+					setValue(key, value !== null ? value : "");
 				}
 			});
 		}
 	}, [id, setValue]);
+
 	const onSubmit = async (data) => {
 		if (id) {
 			await axios.put("/places/", { id, ...data });
