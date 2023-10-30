@@ -47,11 +47,11 @@ export default function BookingWidget({ place }) {
 
 	return (
 		<div className="p-4 bg-white shadow rounded-2xl">
-			<div className="text-2xl text-center">Price: ${place.price} / night</div>
+			<div className="text-2xl text-center">價格: ${place.price} / 晚</div>
 			<div className="mt-4 border rounded-2xl">
 				<div className="flex">
 					<div className="px-4 py-3">
-						<label>Check in:</label>
+						<label>入住:</label>
 						<input
 							type="date"
 							value={checkIn}
@@ -59,7 +59,7 @@ export default function BookingWidget({ place }) {
 						/>
 					</div>
 					<div className="px-4 py-3 border-l">
-						<label>Check out:</label>
+						<label>退房:</label>
 						<input
 							type="date"
 							value={checkOut}
@@ -68,7 +68,7 @@ export default function BookingWidget({ place }) {
 					</div>
 				</div>
 				<div className="px-4 py-3 border-t">
-					<label>Number of guests:</label>
+					<label>入住人數:</label>
 					<input
 						type="number"
 						value={numberOfGuests}
@@ -77,13 +77,13 @@ export default function BookingWidget({ place }) {
 				</div>
 				{numberOfNights > 0 && (
 					<div className="px-4 py-3 border-t">
-						<label>Your full name:</label>
+						<label>您的名字:</label>
 						<input
 							type="text"
 							value={name}
 							onChange={(ev) => setName(ev.target.value)}
 						/>
-						<label>Phone number:</label>
+						<label>電話號碼:</label>
 						<input
 							type="tel"
 							value={phone}
@@ -93,7 +93,7 @@ export default function BookingWidget({ place }) {
 				)}
 			</div>
 			<button onClick={bookThisPlace} className="mt-4 primary">
-				Book this place
+				預訂
 				{numberOfNights > 0 && <span> ${numberOfNights * place.price}</span>}
 			</button>
 		</div>

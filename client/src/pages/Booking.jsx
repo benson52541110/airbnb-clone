@@ -29,12 +29,12 @@ export default function BookingPage() {
 			<AddressLink className="block my-2">{booking.place.address}</AddressLink>
 			<div className="flex items-center justify-between p-6 my-6 bg-gray-200 rounded-2xl">
 				<div>
-					<h2 className="mb-4 text-2xl">Your booking information:</h2>
+					<h2 className="mb-4 text-2xl">您的訂房資訊:</h2>
 					<BookingDates booking={booking} />
 				</div>
-				<div className="p-6 text-white bg-primary rounded-2xl">
-					<div>Total price</div>
-					<div className="text-3xl">${booking.price}</div>
+				<div className="flex items-center p-6 text-white bg-primary rounded-2xl">
+					<div>總價</div>
+					<div className="ml-1 text-3xl">${booking.price}</div>
 				</div>
 			</div>
 			<PlaceGallery place={booking.place} />

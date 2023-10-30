@@ -173,7 +173,7 @@ app.post("/api/places", (req, res) => {
 	const {
 		title,
 		address,
-		addedPhotos,
+		photos,
 		description,
 		price,
 		perks,
@@ -189,7 +189,7 @@ app.post("/api/places", (req, res) => {
 			price,
 			title,
 			address,
-			photos: addedPhotos,
+			photos,
 			description,
 			perks,
 			extraInfo,
@@ -219,11 +219,12 @@ app.get("/api/places/:id", async (req, res) => {
 app.put("/api/places", async (req, res) => {
 	mongoose.connect(process.env.MONGO_URL);
 	const { token } = req.cookies;
+	console.log(req);
 	const {
 		id,
 		title,
 		address,
-		addedPhotos,
+		photos,
 		description,
 		perks,
 		extraInfo,
@@ -235,11 +236,12 @@ app.put("/api/places", async (req, res) => {
 	jwt.verify(token, jwtSecret, {}, async (err, userData) => {
 		if (err) throw err;
 		const placeDoc = await Place.findById(id);
+		console.log(placeDoc);
 		if (userData.id === placeDoc.owner.toString()) {
 			placeDoc.set({
 				title,
 				address,
-				photos: addedPhotos,
+				photos,
 				description,
 				perks,
 				extraInfo,

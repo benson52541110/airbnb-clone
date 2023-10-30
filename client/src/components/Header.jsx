@@ -32,11 +32,11 @@ export default function Header() {
 				</span>
 			</Link>
 			<div className="flex items-center gap-2 px-3 py-2 text-base border border-gray-300 rounded-full shadow-sm shadow-gray-300 ">
-				<div className="mx-2">Anywhere</div>
+				<div className="mx-2">任何地方</div>
 				<div className="w-[1px] h-[24px] bg-gray-200"></div>
-				<div className="mx-2">Any week</div>
+				<div className="mx-2">任一周</div>
 				<div className="w-[1px] h-[24px] bg-gray-200"></div>
-				<div className="mx-2 text-gray-400">Add guests</div>
+				<div className="mx-2 text-gray-400">新增人數</div>
 				<button className="p-2 text-white rounded-full bg-primary">
 					<Icon icon="material-symbols:search" />
 				</button>
@@ -60,31 +60,31 @@ export default function Header() {
 								to={"/account/bookings"}
 								className="block px-4 py-3 cursor-pointer hover:bg-gray-100"
 							>
-								Booking
+								訂房紀錄
 							</Link>
 							<Link
 								to={"/account/wishlists"}
 								className="block px-4 py-3 cursor-pointer hover:bg-gray-100"
 							>
-								Wishlists
+								願望清單
 							</Link>
 							<Link
 								to={"/account/places"}
 								className="block px-4 py-3 cursor-pointer hover:bg-gray-100"
 							>
-								Airbnb your home
+								加入你的房源
 							</Link>
 							<Link
 								to={"/account/profile"}
 								className="block px-4 py-3 cursor-pointer hover:bg-gray-100"
 							>
-								Account
+								帳號資訊
 							</Link>
 							<div
 								className="px-4 py-3 cursor-pointer hover:bg-gray-100"
 								onClick={logout}
 							>
-								Log out
+								登出帳號
 							</div>
 						</div>
 					</div>
@@ -103,13 +103,13 @@ export default function Header() {
 								to={"/login"}
 								className="block px-4 py-3 cursor-pointer hover:bg-gray-100"
 							>
-								Log in
+								登入帳號
 							</Link>
 							<Link
 								to={"/register"}
 								className="block px-4 py-3 cursor-pointer hover:bg-gray-100"
 							>
-								Sign up
+								註冊帳號
 							</Link>
 						</div>
 					</div>

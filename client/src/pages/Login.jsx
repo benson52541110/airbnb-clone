@@ -35,7 +35,7 @@ export default function LoginPage() {
 	return (
 		<div className="flex items-center justify-around mt-4 grow">
 			<div className="mb-64">
-				<h1 className="mb-4 text-4xl text-center">Login</h1>
+				<h1 className="mb-4 text-4xl text-center">登入帳號</h1>
 				<form
 					className="max-w-md mx-auto"
 					onSubmit={handleSubmit(handleLoginSubmit)}
@@ -77,11 +77,11 @@ export default function LoginPage() {
 					{errors.password && (
 						<span className="text-red-500 ">{errors.password.message}</span>
 					)}
-					<button className="mt-2 primary">Login</button>
+					<button className="mt-2 primary">登入</button>
 					<div className="py-2 text-center text-gray-500">
-						Don't have an account yet?{" "}
-						<Link className="text-black underline" to={"/register"}>
-							Sign up
+						還沒擁有帳號嗎?
+						<Link className="ml-2 text-black underline" to={"/register"}>
+							註冊帳號
 						</Link>
 					</div>
 				</form>

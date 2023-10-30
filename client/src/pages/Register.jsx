@@ -25,7 +25,7 @@ export default function RegisterPage() {
 	return (
 		<div className="flex items-center justify-around mt-4 grow">
 			<div className="mb-64">
-				<h1 className="mb-4 text-4xl text-center">Sign up</h1>
+				<h1 className="mb-4 text-4xl text-center">註冊帳號</h1>
 				<form
 					className="max-w-md mx-auto"
 					onSubmit={handleSubmit(registerUser)}
@@ -81,11 +81,11 @@ export default function RegisterPage() {
 					{errors.password && (
 						<span className="text-red-500 ">{errors.password.message}</span>
 					)}
-					<button className="mt-2 primary">Sign up</button>
+					<button className="mt-2 primary">註冊</button>
 					<div className="py-2 text-center text-gray-500">
-						Don't have an account yet?{" "}
-						<Link className="text-black underline" to={"/login"}>
-							Login
+						已擁有帳號?{" "}
+						<Link className="ml-2 text-black underline" to={"/login"}>
+							登入帳號
 						</Link>
 					</div>
 				</form>

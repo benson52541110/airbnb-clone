@@ -8,47 +8,47 @@ import "./Category.css";
 const Category = () => {
 	const [selectedSlide, setSelectedSlide] = useState(null);
 	const slides = [
-		{ icon: <Icon icon="carbon:home" className="text-2xl" />, text: "Minsus" },
+		{ icon: <Icon icon="carbon:home" className="text-2xl" />, text: "民宿" },
 		{
 			icon: <Icon icon="ic:sharp-meeting-room" className="text-2xl" />,
-			text: "Rooms",
+			text: "客房",
 		},
 		{
 			icon: <Icon icon="game-icons:island" className="text-2xl" />,
-			text: "Views",
+			text: "景觀",
 		},
-		{ icon: <Icon icon="tdesign:money" className="text-2xl" />, text: "Luxe" },
+		{ icon: <Icon icon="tdesign:money" className="text-2xl" />, text: "奢華" },
 		{
 			icon: <Icon icon="game-icons:windmill" className="text-2xl" />,
-			text: "Windmills",
+			text: "風車",
 		},
-		{ icon: <Icon icon="tabler:beach" className="text-2xl" />, text: "Beach" },
+		{ icon: <Icon icon="tabler:beach" className="text-2xl" />, text: "海灘" },
 		{
 			icon: <Icon icon="clarity:container-line" className="text-2xl" />,
-			text: "Container",
+			text: "大型",
 		},
 		{
 			icon: (
 				<Icon icon="material-symbols:camping-outline" className="text-2xl" />
 			),
-			text: "Camping",
+			text: "露營",
 		},
-		{ icon: <Icon icon="gg:piano" className="text-2xl" />, text: "Piano" },
-		{ icon: <Icon icon="iconoir:city" className="text-2xl" />, text: "City" },
-		{ icon: <Icon icon="mdi:chef-hat" className="text-2xl" />, text: "Chef" },
+		{ icon: <Icon icon="gg:piano" className="text-2xl" />, text: "鋼琴" },
+		{ icon: <Icon icon="iconoir:city" className="text-2xl" />, text: "城市" },
+		{ icon: <Icon icon="mdi:chef-hat" className="text-2xl" />, text: "廚師" },
 		{
 			icon: <Icon icon="ic:baseline-cabin" className="text-2xl" />,
-			text: "Cabins",
+			text: "木屋",
 		},
-		{ icon: <Icon icon="mdi:pool" className="text-2xl" />, text: "Pools" },
-		{ icon: <Icon icon="mdi:pool" className="text-2xl" />, text: "Play" },
+		{ icon: <Icon icon="mdi:pool" className="text-2xl" />, text: "泳池" },
+		{ icon: <Icon icon="mdi:pool" className="text-2xl" />, text: "娛樂" },
 		{
 			icon: <Icon icon="ic:outline-home" className="text-2xl" />,
-			text: "Home",
+			text: "小屋",
 		},
 		{
 			icon: <Icon icon="arcticons:arcticons" className="text-2xl" />,
-			text: "arctics",
+			text: "雪景",
 		},
 		{
 			icon: (
@@ -57,13 +57,13 @@ const Category = () => {
 					className="text-2xl"
 				/>
 			),
-			text: "temples",
+			text: "寺廟",
 		},
-		{ icon: <Icon icon="ph:park" className="text-2xl" />, text: "Park" },
-		{ icon: <Icon icon="mdi:fire" className="text-2xl" />, text: "Trending" },
+		{ icon: <Icon icon="ph:park" className="text-2xl" />, text: "公園" },
+		{ icon: <Icon icon="mdi:fire" className="text-2xl" />, text: "篝火" },
 		{
 			icon: <Icon icon="fluent:water-48-regular" className="text-2xl" />,
-			text: "Lake",
+			text: "湖泊",
 		},
 	];
 

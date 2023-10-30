@@ -11,7 +11,7 @@ export default function PlacesFormPage() {
 		defaultValues: {
 			title: "",
 			address: "",
-			addedPhotos: [],
+			photos: [],
 			description: "",
 			perks: [],
 			extraInfo: "",
@@ -26,6 +26,7 @@ export default function PlacesFormPage() {
 	useEffect(() => {
 		if (id) {
 			axios.get("/places/" + id).then((response) => {
+				console.log(response);
 				const { data } = response;
 				for (const [key, value] of Object.entries(data)) {
 					setValue(key, value !== null ? value : "");
@@ -39,6 +40,7 @@ export default function PlacesFormPage() {
 			await axios.put("/places/", { id, ...data });
 		} else {
 			await axios.post("/places", data);
+			console.log(data);
 		}
 		setRedirect(true);
 	};
@@ -50,10 +52,9 @@ export default function PlacesFormPage() {
 	return (
 		<div>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				{/* For Title */}
-				<h2 className="mt-4 text-2xl">Title</h2>
+				<h2 className="mt-4 text-2xl">房屋名稱</h2>
 				<p className="text-sm text-gray-500">
-					Title for your place. Should be short and catchy as in advertisement
+					為您的房屋取個名字，例如：我的小窩
 				</p>
 				<Controller
 					name="title"
@@ -67,9 +68,8 @@ export default function PlacesFormPage() {
 					)}
 				/>
 
-				{/* For Address */}
-				<h2 className="mt-4 text-2xl">Address</h2>
-				<p className="text-sm text-gray-500">Address to this place</p>
+				<h2 className="mt-4 text-2xl">地址</h2>
+				<p className="text-sm text-gray-500">房屋地址</p>
 				<Controller
 					name="address"
 					control={control}
@@ -78,34 +78,26 @@ export default function PlacesFormPage() {
 					)}
 				/>
 
-				{/* For Photos */}
-				<h2 className="mt-4 text-2xl">Photos</h2>
-				<p className="text-sm text-gray-500">More = better</p>
+				<h2 className="mt-4 text-2xl">房屋照片</h2>
+				<p className="text-sm text-gray-500">越多越好</p>
 				<Controller
-					name="addedPhotos"
+					name="photos"
 					control={control}
 					render={({ field }) => (
-						<PhotosUploader
-							addedPhotos={field.value}
-							onChange={field.onChange}
-						/>
+						<PhotosUploader photos={field.value} onChange={field.onChange} />
 					)}
 				/>
 
-				{/* For Description */}
-				<h2 className="mt-4 text-2xl">Description</h2>
-				<p className="text-sm text-gray-500">Description of the place</p>
+				<h2 className="mt-4 text-2xl">房屋介紹</h2>
+				<p className="text-sm text-gray-500">詳細介紹您的房屋</p>
 				<Controller
 					name="description"
 					control={control}
 					render={({ field }) => <textarea {...field} />}
 				/>
 
-				{/* For Perks */}
-				<h2 className="mt-4 text-2xl">Perks</h2>
-				<p className="text-sm text-gray-500">
-					Select all the perks of your place
-				</p>
+				<h2 className="mt-4 text-2xl">設備與服務</h2>
+				<p className="text-sm text-gray-500">選擇您有提供的設備與服務</p>
 				<div className="grid grid-cols-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
 					<Controller
 						name="perks"
@@ -116,20 +108,17 @@ export default function PlacesFormPage() {
 					/>
 				</div>
 
-				{/* For Extra Info */}
-				<h2 className="mt-4 text-2xl">Extra Info</h2>
-				<p className="text-sm text-gray-500">House rules, etc</p>
+				<h2 className="mt-4 text-2xl">更多資訊</h2>
+				<p className="text-sm text-gray-500">房屋規則與介紹,等等...</p>
 				<Controller
 					name="extraInfo"
 					control={control}
 					render={({ field }) => <textarea {...field} />}
 				/>
 
-				{/* For Check In & Check Out Times */}
-				<h2 className="mt-4 text-2xl">Check In & Out Times</h2>
+				<h2 className="mt-4 text-2xl">入住與退房時間</h2>
 				<p className="text-sm text-gray-500">
-					Add check in and out times, remember to have some time window for
-					cleaning the room between guests
+					添加房屋的入住與退房時間，以便房客知道何時可以入住與退房
 				</p>
 				<div className="grid grid-cols-2 gap-2 md:grid-cols-4">
 					<Controller
@@ -158,7 +147,7 @@ export default function PlacesFormPage() {
 					/>
 				</div>
 
-				<button className="my-4 primary">Save</button>
+				<button className="my-4 primary">儲存</button>
 			</form>
 		</div>
 	);
