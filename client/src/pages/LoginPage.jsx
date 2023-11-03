@@ -1,49 +1,47 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import axios from "axios";
+import { Link, Navigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import axios from "../utils/axios.js";
+import { UserContext } from "../context/UserContext.jsx";
 import { useForm, Controller } from "react-hook-form";
+import Notification from "../components/Notification";
 
-export default function RegisterPage() {
+export default function LoginPage() {
 	const {
 		handleSubmit,
 		control,
 		formState: { errors },
 	} = useForm();
-	async function registerUser(ev) {
-		ev.preventDefault();
+	const [redirect, setRedirect] = useState(false);
+	const { setUser } = useContext(UserContext);
+	const [notification, setNotification] = useState({ type: "", message: "" });
+
+	async function handleLoginSubmit(formData) {
+		const { email, password } = formData;
 		try {
-			await axios.post("/register", {
-				name,
+			const { data: userData } = await axios.post("/login", {
 				email,
 				password,
 			});
-			alert("Registration successful. Now you can log in");
+			setUser(userData);
+			setNotification({ type: "success", message: "登入成功" });
+			setRedirect(true);
 		} catch (e) {
-			alert("Registration failed. Please try again later");
+			setNotification({ type: "error", message: "登入失敗" });
 		}
 	}
+
+	if (redirect) {
+		return <Navigate to={"/"} />;
+	}
+
 	return (
 		<div className="flex items-center justify-around mt-4 grow">
 			<div className="mb-64">
-				<h1 className="mb-4 text-4xl text-center">註冊帳號</h1>
+				<h1 className="mb-4 text-4xl text-center">登入</h1>
 				<form
 					className="max-w-md mx-auto"
-					onSubmit={handleSubmit(registerUser)}
+					onSubmit={handleSubmit(handleLoginSubmit)}
 				>
-					<Controller
-						name="name"
-						control={control}
-						defaultValue=""
-						rules={{
-							required: "Name is required",
-						}}
-						render={({ field }) => (
-							<input type="text" placeholder="benson" {...field} />
-						)}
-					/>
-					{errors.name && (
-						<span className="text-red-500 ">{errors.name.message}</span>
-					)}
 					<Controller
 						name="email"
 						control={control}
@@ -81,14 +79,20 @@ export default function RegisterPage() {
 					{errors.password && (
 						<span className="text-red-500 ">{errors.password.message}</span>
 					)}
-					<button className="mt-2 primary">註冊</button>
+					<button className="mt-2 primary">登入</button>
 					<div className="py-2 text-center text-gray-500">
-						已擁有帳號?{" "}
-						<Link className="ml-2 text-black underline" to={"/login"}>
-							登入帳號
+						還沒擁有帳號嗎?
+						<Link className="ml-2 text-black underline" to={"/register"}>
+							註冊
 						</Link>
 					</div>
 				</form>
+				{notification.message && (
+					<Notification
+						type={notification.type}
+						message={notification.message}
+					/>
+				)}
 			</div>
 		</div>
 	);

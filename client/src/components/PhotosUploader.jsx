@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../utils/axios";
 import { useState } from "react";
 import Image from "./Image";
 import { Icon } from "@iconify/react";

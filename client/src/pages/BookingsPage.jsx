@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import PlaceImg from "../components/PlaceImg";
 import { differenceInCalendarDays, format } from "date-fns";
 import { Link } from "react-router-dom";

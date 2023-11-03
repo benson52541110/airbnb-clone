@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import { Navigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import PhotosUploader from "../components/PhotosUploader";

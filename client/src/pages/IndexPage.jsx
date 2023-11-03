@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../utils/axios.js";
 import { Link } from "react-router-dom";
 import Image from "../components/Image.jsx";
 import Category from "../components/Category.jsx";

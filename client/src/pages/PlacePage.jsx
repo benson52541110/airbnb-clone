@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import BookingWidget from "../components/BookingWidget";
 import PlaceGallery from "../components/PlaceGallery";
 import AddressLink from "../components/AddressLink";

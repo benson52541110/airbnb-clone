@@ -1,45 +1,49 @@
-import { Link, Navigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import axios from "axios";
-import { UserContext } from "../context/UserContext.jsx";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "../utils/axios";
 import { useForm, Controller } from "react-hook-form";
 
-export default function LoginPage() {
+export default function RegisterPage() {
 	const {
 		handleSubmit,
 		control,
 		formState: { errors },
 	} = useForm();
-	const [redirect, setRedirect] = useState(false);
-	const { setUser } = useContext(UserContext);
-
-	async function handleLoginSubmit(formData) {
-		const { email, password } = formData;
+	async function registerUser(ev) {
+		ev.preventDefault();
 		try {
-			const { data: userData } = await axios.post("/login", {
+			await axios.post("/register", {
+				name,
 				email,
 				password,
 			});
-			setUser(userData);
-			alert("Login successful");
-			setRedirect(true);
+			alert("Registration successful. Now you can log in");
 		} catch (e) {
-			alert("Login failed");
+			alert("Registration failed. Please try again later");
 		}
 	}
-
-	if (redirect) {
-		return <Navigate to={"/"} />;
-	}
-
 	return (
 		<div className="flex items-center justify-around mt-4 grow">
 			<div className="mb-64">
-				<h1 className="mb-4 text-4xl text-center">登入帳號</h1>
+				<h1 className="mb-4 text-4xl text-center">註冊帳號</h1>
 				<form
 					className="max-w-md mx-auto"
-					onSubmit={handleSubmit(handleLoginSubmit)}
+					onSubmit={handleSubmit(registerUser)}
 				>
+					<Controller
+						name="name"
+						control={control}
+						defaultValue=""
+						rules={{
+							required: "Name is required",
+						}}
+						render={({ field }) => (
+							<input type="text" placeholder="benson" {...field} />
+						)}
+					/>
+					{errors.name && (
+						<span className="text-red-500 ">{errors.name.message}</span>
+					)}
 					<Controller
 						name="email"
 						control={control}
@@ -77,11 +81,11 @@ export default function LoginPage() {
 					{errors.password && (
 						<span className="text-red-500 ">{errors.password.message}</span>
 					)}
-					<button className="mt-2 primary">登入</button>
+					<button className="mt-2 primary">註冊</button>
 					<div className="py-2 text-center text-gray-500">
-						還沒擁有帳號嗎?
-						<Link className="ml-2 text-black underline" to={"/register"}>
-							註冊帳號
+						已擁有帳號?{" "}
+						<Link className="ml-2 text-black underline" to={"/login"}>
+							登入
 						</Link>
 					</div>
 				</form>

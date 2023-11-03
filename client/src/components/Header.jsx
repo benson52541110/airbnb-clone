@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useRef, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { Icon } from "@iconify/react";
-import axios from "axios";
+import axios from "../utils/axios";
 
 export default function Header() {
 	const { ready, user, setUser } = useContext(UserContext);
@@ -84,7 +84,7 @@ export default function Header() {
 								className="px-4 py-3 cursor-pointer hover:bg-gray-100"
 								onClick={logout}
 							>
-								登出帳號
+								登出
 							</div>
 						</div>
 					</div>
@@ -103,13 +103,13 @@ export default function Header() {
 								to={"/login"}
 								className="block px-4 py-3 cursor-pointer hover:bg-gray-100"
 							>
-								登入帳號
+								登入
 							</Link>
 							<Link
 								to={"/register"}
 								className="block px-4 py-3 cursor-pointer hover:bg-gray-100"
 							>
-								註冊帳號
+								註冊
 							</Link>
 						</div>
 					</div>
