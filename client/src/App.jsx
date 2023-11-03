@@ -1,12 +1,13 @@
 import { Routes } from "react-router-dom";
 import { routes } from "./routes/index.jsx";
-import { UserContextProvider } from "./context/UserContext";
+import { Provider } from "react-redux";
+import { store } from "./app/store.js";
 
 function App() {
 	return (
-		<UserContextProvider>
+		<Provider store={store}>
 			<Routes>{routes}</Routes>
-		</UserContextProvider>
+		</Provider>
 	);
 }
 

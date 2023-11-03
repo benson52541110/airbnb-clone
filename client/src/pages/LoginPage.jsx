@@ -1,9 +1,10 @@
 import { Link, Navigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import axios from "../utils/axios.js";
-import { UserContext } from "../context/UserContext.jsx";
 import { useForm, Controller } from "react-hook-form";
 import Notification from "../components/Notification";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, fetchUserProfile } from "../features/user/userSlice";
 
 export default function LoginPage() {
 	const {
@@ -12,7 +13,8 @@ export default function LoginPage() {
 		formState: { errors },
 	} = useForm();
 	const [redirect, setRedirect] = useState(false);
-	const { setUser } = useContext(UserContext);
+	const dispatch = useDispatch();
+	const { user, error, ready } = useSelector((state) => state.user);
 	const [notification, setNotification] = useState({ type: "", message: "" });
 
 	async function handleLoginSubmit(formData) {
@@ -22,7 +24,7 @@ export default function LoginPage() {
 				email,
 				password,
 			});
-			setUser(userData);
+			dispatch(setUser(userData));
 			setNotification({ type: "success", message: "登入成功" });
 			setRedirect(true);
 		} catch (e) {

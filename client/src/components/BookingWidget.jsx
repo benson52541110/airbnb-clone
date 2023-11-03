@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { differenceInCalendarDays } from "date-fns";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext.jsx";
+import { useSelector } from "react-redux";
 
 export default function BookingWidget({ place }) {
 	const [checkIn, setCheckIn] = useState("");
@@ -11,7 +11,7 @@ export default function BookingWidget({ place }) {
 	const [name, setName] = useState("");
 	const [phone, setPhone] = useState("");
 	const [redirect, setRedirect] = useState("");
-	const { user } = useContext(UserContext);
+	const { user } = useSelector((state) => state.user);
 
 	useEffect(() => {
 		if (user) {

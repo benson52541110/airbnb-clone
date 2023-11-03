@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useRef, useState } from "react";
-import { UserContext } from "../context/UserContext";
 import { Icon } from "@iconify/react";
 import axios from "../utils/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../features/user/userSlice";
 
 export default function Header() {
-	const { ready, user, setUser } = useContext(UserContext);
+	const { user, ready } = useSelector((state) => state.user); // 從 Redux store 中選取狀態
+	const dispatch = useDispatch();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 
@@ -16,8 +18,8 @@ export default function Header() {
 	};
 	async function logout() {
 		await axios.post("/logout");
+		dispatch(setUser(null));
 		navigate("/login");
-		setUser(null);
 	}
 
 	return (
