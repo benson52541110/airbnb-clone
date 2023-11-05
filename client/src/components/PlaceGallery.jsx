@@ -5,6 +5,18 @@ import { Icon } from "@iconify/react";
 export default function PlaceGallery({ place }) {
 	const [showAllPhotos, setShowAllPhotos] = useState(false);
 
+	const Photo = ({ photo }) => {
+		const handleClick = () => setShowAllPhotos(true);
+		return photo ? (
+			<Image
+				onClick={handleClick}
+				className="object-cover cursor-pointer aspect-[4/3] hover:grayscale-[40%] h-full"
+				src={photo}
+				alt={`Photo`}
+			/>
+		) : null;
+	};
+
 	if (showAllPhotos) {
 		return (
 			<div className="absolute inset-0 min-h-screen text-white bg-black">
@@ -12,7 +24,7 @@ export default function PlaceGallery({ place }) {
 					<div>
 						<button
 							onClick={() => setShowAllPhotos(false)}
-							className="fixed flex gap-1 p-2 text-black bg-white shadow p x-4 right-12 top-8 rounded-2xl shadow-black"
+							className="fixed flex gap-1 p-2 text-black bg-white shadow x-4 right-12 top-8 rounded-2xl shadow-black"
 						>
 							<Icon icon="iconoir:cancel" />
 						</button>
@@ -30,37 +42,20 @@ export default function PlaceGallery({ place }) {
 
 	return (
 		<div className="relative">
-			<div className="grid gap-2 grid-cols-[2fr_1fr] rounded-3xl overflow-hidden">
+			<div className="grid gap-2 grid-cols-[2fr_1fr_1fr] rounded-3xl overflow-hidden">
 				<div>
-					{place.photos?.[0] && (
-						<div>
-							<Image
-								onClick={() => setShowAllPhotos(true)}
-								className="object-cover cursor-pointer aspect-square"
-								src={place.photos[0]}
-								alt=""
-							/>
-						</div>
-					)}
+					<Photo photo={place.photos?.[0]} />
 				</div>
-				<div className="grid">
-					{place.photos?.[1] && (
-						<Image
-							onClick={() => setShowAllPhotos(true)}
-							className="object-cover cursor-pointer aspect-square"
-							src={place.photos[1]}
-							alt=""
-						/>
-					)}
+				<div className="grid grid-rows-2 gap-2">
+					<Photo photo={place.photos?.[1]} />
 					<div className="overflow-hidden">
-						{place.photos?.[2] && (
-							<Image
-								onClick={() => setShowAllPhotos(true)}
-								className="relative object-cover cursor-pointer aspect-square top-2"
-								src={place.photos[2]}
-								alt=""
-							/>
-						)}
+						<Photo photo={place.photos?.[2]} />
+					</div>
+				</div>
+				<div className="grid grid-rows-2 gap-2">
+					<Photo photo={place.photos?.[3]} />
+					<div className="overflow-hidden">
+						<Photo photo={place.photos?.[4]} />
 					</div>
 				</div>
 			</div>

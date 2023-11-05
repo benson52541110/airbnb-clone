@@ -17,7 +17,7 @@ export default function Perks({ perks, onChange }) {
 					name="wifi"
 					onChange={handleCbClick}
 				/>
-				<Icon icon="material-symbols:wifi" />
+				<Icon icon="mdi:wifi" />
 				<span>Wifi</span>
 			</label>
 			<label className="flex items-center gap-2 p-4 border cursor-pointer rounded-2xl">
@@ -27,7 +27,7 @@ export default function Perks({ perks, onChange }) {
 					name="parking"
 					onChange={handleCbClick}
 				/>
-				<Icon icon="tabler:parking" />
+				<Icon icon="mdi:parking" />
 				<span>免費停車場</span>
 			</label>
 			<label className="flex items-center gap-2 p-4 border cursor-pointer rounded-2xl">
@@ -37,7 +37,7 @@ export default function Perks({ perks, onChange }) {
 					name="tv"
 					onChange={handleCbClick}
 				/>
-				<Icon icon="solar:tv-line-duotone" />
+				<Icon icon="mdi:tv" />
 				<span>電視</span>
 			</label>
 			<label className="flex items-center gap-2 p-4 border cursor-pointer rounded-2xl">
@@ -47,7 +47,7 @@ export default function Perks({ perks, onChange }) {
 					name="audio"
 					onChange={handleCbClick}
 				/>
-				<Icon icon="tdesign:audio" />
+				<Icon icon="mdi:audio" />
 				<span>音響</span>
 			</label>
 			<label className="flex items-center gap-2 p-4 border cursor-pointer rounded-2xl">
@@ -57,7 +57,7 @@ export default function Perks({ perks, onChange }) {
 					name="pets"
 					onChange={handleCbClick}
 				/>
-				<Icon icon="material-symbols:pets" />
+				<Icon icon="mdi:pets" />
 				<span>寵物</span>
 			</label>
 			<label className="flex items-center gap-2 p-4 border cursor-pointer rounded-2xl">
@@ -67,7 +67,7 @@ export default function Perks({ perks, onChange }) {
 					name="entrance"
 					onChange={handleCbClick}
 				/>
-				<Icon icon="uil:entry" />
+				<Icon icon="mdi:door" />
 				<span>私人入口</span>
 			</label>
 		</>

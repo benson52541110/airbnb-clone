@@ -47,7 +47,7 @@ export default function BookingWidget({ place }) {
 
 	return (
 		<div className="p-4 bg-white shadow rounded-2xl">
-			<div className="text-2xl text-center">價格: ${place.price} / 晚</div>
+			<div className="text-2xl text-center">${place.price} / 晚</div>
 			<div className="mt-4 border rounded-2xl">
 				<div className="flex">
 					<div className="px-4 py-3">
