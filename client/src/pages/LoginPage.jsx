@@ -4,7 +4,7 @@ import axios from "../utils/axios.js";
 import { useForm, Controller } from "react-hook-form";
 import Notification from "../components/Notification";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser, fetchUserProfile } from "../features/user/userSlice";
+import { setUser, fetchUserProfile } from "../state/user/userSlice.js";
 
 export default function LoginPage() {
 	const {

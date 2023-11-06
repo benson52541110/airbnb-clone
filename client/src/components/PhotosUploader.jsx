@@ -4,7 +4,6 @@ import Image from "./Image";
 import { Icon } from "@iconify/react";
 
 export default function PhotosUploader({ photos, onChange }) {
-	console.log(photos);
 	const [photoLink, setPhotoLink] = useState("");
 	async function addPhotoByLink(ev) {
 		ev.preventDefault();

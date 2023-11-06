@@ -3,10 +3,10 @@ import { useContext, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import axios from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../features/user/userSlice";
+import { setUser } from "../state/user/userSlice.js";
 
 export default function Header() {
-	const { user, ready } = useSelector((state) => state.user); // 從 Redux store 中選取狀態
+	const { user, ready } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();

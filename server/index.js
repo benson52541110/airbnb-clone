@@ -181,6 +181,8 @@ app.post("/api/places", (req, res) => {
 		checkIn,
 		checkOut,
 		maxGuests,
+		roomType,
+		roomRange,
 	} = req.body;
 	jwt.verify(token, jwtSecret, {}, async (err, userData) => {
 		if (err) throw err;
@@ -196,6 +198,8 @@ app.post("/api/places", (req, res) => {
 			checkIn,
 			checkOut,
 			maxGuests,
+			roomType,
+			roomRange,
 		});
 		res.json(placeDoc);
 	});
@@ -219,7 +223,6 @@ app.get("/api/places/:id", async (req, res) => {
 app.put("/api/places", async (req, res) => {
 	mongoose.connect(process.env.MONGO_URL);
 	const { token } = req.cookies;
-	console.log(req);
 	const {
 		id,
 		title,
@@ -232,11 +235,12 @@ app.put("/api/places", async (req, res) => {
 		checkOut,
 		maxGuests,
 		price,
+		roomType,
+		roomRange,
 	} = req.body;
 	jwt.verify(token, jwtSecret, {}, async (err, userData) => {
 		if (err) throw err;
 		const placeDoc = await Place.findById(id);
-		console.log(placeDoc);
 		if (userData.id === placeDoc.owner.toString()) {
 			placeDoc.set({
 				title,
@@ -249,6 +253,8 @@ app.put("/api/places", async (req, res) => {
 				checkOut,
 				maxGuests,
 				price,
+				roomType,
+				roomRange,
 			});
 			await placeDoc.save();
 			res.json("ok");
