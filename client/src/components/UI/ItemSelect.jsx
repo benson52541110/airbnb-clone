@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 export default function ItemSelect({ list, isSelected, onCbClick }) {
 	return (
 		<div
-			className={`flex items-center gap-2 px-4 py-8 border cursor-pointer rounded-2xl ${
+			className={`flex items-center gap-2 px-4 py-8 border-2 cursor-pointer rounded-2xl ${
 				isSelected ? "border-black bg-gray-100" : ""
 			}`}
 			onClick={() =>

@@ -1,8 +1,10 @@
 import Image from "../components/Image.jsx";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function RoomCard({ places, url }) {
+	const { user } = useSelector((state) => state.user);
 	return (
 		<>
 			{places.length > 0 &&
@@ -22,7 +24,7 @@ export default function RoomCard({ places, url }) {
 							<Icon icon="bxs:map" />
 							<h3 className="text-sm text-gray-500">{place.address}</h3>
 						</div>
-						<h3 className="text-sm text-gray-500">房東: {place.address}</h3>
+						<h3 className="text-sm text-gray-500">房東: {user.name}</h3>
 						<div className="mt-1">
 							<span className="font-bold">${place.price}</span> 晚
 						</div>

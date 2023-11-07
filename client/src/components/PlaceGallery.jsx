@@ -19,8 +19,8 @@ export default function PlaceGallery({ place }) {
 
 	if (showAllPhotos) {
 		return (
-			<div className="absolute inset-0 min-h-screen text-white bg-black">
-				<div className="grid gap-4 p-8 bg-black">
+			<div className="absolute inset-0 flex justify-center min-h-screen text-white bg-white">
+				<div className="grid p-12 bg-white">
 					<div>
 						<button
 							onClick={() => setShowAllPhotos(false)}
@@ -29,12 +29,22 @@ export default function PlaceGallery({ place }) {
 							<Icon icon="iconoir:cancel" />
 						</button>
 					</div>
-					{place?.photos?.length > 0 &&
-						place.photos.map((photo) => (
-							<div key={photo}>
-								<Image src={photo} alt="" />
-							</div>
-						))}
+					<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+						{place?.photos?.map((photo, index) => {
+							// 計算每張圖片應該占據的列數
+							const colSpan =
+								index % 3 === 0 ? "md:col-span-2" : "md:col-span-1";
+							return (
+								<div key={photo} className={colSpan}>
+									<img
+										src={photo}
+										alt={`Place image ${index + 1}`}
+										className="object-cover w-full h-48"
+									/>
+								</div>
+							);
+						})}
+					</div>
 				</div>
 			</div>
 		);

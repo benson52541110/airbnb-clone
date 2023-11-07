@@ -94,6 +94,7 @@ app.post("/api/login", async (req, res) => {
 				{
 					email: userDoc.email,
 					id: userDoc._id,
+					name: userDoc.name,
 				},
 				jwtSecret,
 				{},
@@ -270,6 +271,7 @@ app.get("/api/places", async (req, res) => {
 app.post("/api/bookings", async (req, res) => {
 	mongoose.connect(process.env.MONGO_URL);
 	const userData = await getUserDataFromReq(req);
+	console.log(userData);
 	const { place, checkIn, checkOut, numberOfGuests, name, phone, price } =
 		req.body;
 	Booking.create({

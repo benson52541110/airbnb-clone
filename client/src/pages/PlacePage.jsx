@@ -4,16 +4,19 @@ import axios from "../utils/axios";
 import BookingWidget from "../components/BookingWidget";
 import PlaceGallery from "../components/PlaceGallery";
 import AddressLink from "../components/AddressLink";
+import { useSelector } from "react-redux";
 
 export default function PlacePage() {
 	const { id } = useParams();
 	const [place, setPlace] = useState(null);
+	const { user } = useSelector((state) => state.user);
 	useEffect(() => {
 		if (!id) {
 			return;
 		}
 		axios.get(`/places/${id}`).then((response) => {
 			setPlace(response.data);
+			console.log(response.data);
 		});
 	}, [id]);
 
@@ -27,7 +30,9 @@ export default function PlacePage() {
 			<div className="mt-8 mb-8 grid gap-8 grid-cols-1 md:grid-cols-[2fr_1fr]">
 				<div>
 					<div className="my-4">
-						<h2 className="text-2xl font-semibold">房型介紹</h2>
+						<h2 className="text-2xl font-semibold">
+							{user?.name} 出租的 {place.roomType}
+						</h2>
 						{place.description}
 					</div>
 					入住時間: {place.checkIn}
