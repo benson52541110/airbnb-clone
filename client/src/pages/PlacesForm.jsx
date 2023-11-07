@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import { Navigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import PhotosUploader from "../components/PhotosUploader";
 import Perks from "../components/Perks";
+import RoomType from "../components/RoomType";
+import RoomRange from "../components/RoomRange";
 
 export default function PlacesFormPage() {
 	const { id } = useParams();
-	const { handleSubmit, control, setValue } = useForm({
+	const {
+		handleSubmit,
+		control,
+		setValue,
+		formState: { errors },
+	} = useForm({
 		defaultValues: {
 			title: "",
 			address: "",
-			addedPhotos: [],
+			photos: [],
 			description: "",
 			perks: [],
 			extraInfo: "",
@@ -19,21 +26,29 @@ export default function PlacesFormPage() {
 			checkOut: "",
 			maxGuests: "",
 			price: "",
+			roomType: "",
+			roomRange: "",
 		},
 	});
 	const [redirect, setRedirect] = useState(false);
 
 	useEffect(() => {
-		if (id) {
-			axios.get("/places/" + id).then((response) => {
-				const { data } = response;
-				console.log(response);
-				for (const [key, value] of Object.entries(data)) {
-					setValue(key, value);
+		const fetchData = async () => {
+			try {
+				if (id) {
+					const response = await axios.get(`/places/${id}`);
+					Object.entries(response.data).forEach(([key, value]) =>
+						setValue(key, value ?? "")
+					);
 				}
-			});
-		}
+			} catch (error) {
+				console.error("An error occurred while fetching data", error);
+			}
+		};
+
+		fetchData();
 	}, [id, setValue]);
+
 	const onSubmit = async (data) => {
 		if (id) {
 			await axios.put("/places/", { id, ...data });
@@ -49,116 +64,215 @@ export default function PlacesFormPage() {
 
 	return (
 		<div>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				{/* For Title */}
-				<h2 className="mt-4 text-2xl">Title</h2>
-				<p className="text-sm text-gray-500">
-					Title for your place. Should be short and catchy as in advertisement
-				</p>
-				<Controller
-					name="title"
-					control={control}
-					render={({ field }) => (
-						<input
-							{...field}
-							type="text"
-							placeholder="Title, for example: My lovely apt"
-						/>
+			<form
+				onSubmit={handleSubmit(onSubmit)}
+				className="grid grid-cols-2 gap-12"
+			>
+				<div>
+					<h2 className="mt-4 text-2xl">房屋名稱</h2>
+					<p className="text-sm text-gray-500">
+						為您的房屋取個名字，例如：我的小窩
+					</p>
+					<Controller
+						name="title"
+						control={control}
+						render={({ field }) => (
+							<input
+								{...field}
+								type="text"
+								placeholder="Title, for example: My lovely apt"
+								className={errors.title ? "border-red-500" : ""}
+							/>
+						)}
+						rules={{ required: "房屋名稱為必填項目" }}
+					/>
+					{errors.title && (
+						<span className="text-red-500 ">{errors.title.message}</span>
 					)}
-				/>
-
-				{/* For Address */}
-				<h2 className="mt-4 text-2xl">Address</h2>
-				<p className="text-sm text-gray-500">Address to this place</p>
-				<Controller
-					name="address"
-					control={control}
-					render={({ field }) => (
-						<input {...field} type="text" placeholder="Address" />
+				</div>
+				<div>
+					<h2 className="mt-4 text-2xl">價格</h2>
+					<p className="text-sm text-gray-500">房間價格</p>
+					<Controller
+						name="price"
+						control={control}
+						render={({ field }) => (
+							<input
+								{...field}
+								type="number"
+								placeholder="price"
+								className={errors.price ? "border-red-500" : ""}
+							/>
+						)}
+						rules={{ required: "價格為必填項目" }}
+					/>
+					{errors.price && (
+						<span className="text-red-500 ">{errors.price.message}</span>
 					)}
-				/>
-
-				{/* For Photos */}
-				<h2 className="mt-4 text-2xl">Photos</h2>
-				<p className="text-sm text-gray-500">More = better</p>
-				<Controller
-					name="addedPhotos"
-					control={control}
-					render={({ field }) => (
-						<PhotosUploader
-							addedPhotos={field.value}
-							onChange={field.onChange}
-						/>
+				</div>
+				<div>
+					<h2 className="mt-4 text-2xl">地址</h2>
+					<p className="text-sm text-gray-500">房屋地址</p>
+					<Controller
+						name="address"
+						control={control}
+						render={({ field }) => (
+							<input
+								{...field}
+								type="text"
+								placeholder="Address"
+								className={errors.address ? "border-red-500" : ""}
+							/>
+						)}
+						rules={{ required: "房屋地址為必填項目" }}
+					/>
+					{errors.address && (
+						<span className="text-red-500 ">{errors.address.message}</span>
 					)}
-				/>
-
-				{/* For Description */}
-				<h2 className="mt-4 text-2xl">Description</h2>
-				<p className="text-sm text-gray-500">Description of the place</p>
-				<Controller
-					name="description"
-					control={control}
-					render={({ field }) => <textarea {...field} />}
-				/>
-
-				{/* For Perks */}
-				<h2 className="mt-4 text-2xl">Perks</h2>
-				<p className="text-sm text-gray-500">
-					Select all the perks of your place
-				</p>
-				<div className="grid grid-cols-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
+				</div>
+				<div>
+					<h2 className="mt-4 text-2xl">房屋介紹</h2>
+					<p className="text-sm text-gray-500">詳細介紹您的房屋</p>
+					<Controller
+						name="description"
+						control={control}
+						render={({ field }) => (
+							<textarea
+								{...field}
+								className={errors.description ? "border-red-500" : ""}
+							/>
+						)}
+						rules={{ required: "房屋介紹為必填項目" }}
+					/>
+					{errors.description && (
+						<span className="text-red-500 ">{errors.description.message}</span>
+					)}
+				</div>
+				<div className="col-span-2">
+					<h2 className="mt-4 text-2xl">房屋照片</h2>
+					<p className="text-sm text-gray-500">越多越好</p>
+					<Controller
+						name="photos"
+						control={control}
+						render={({ field }) => (
+							<PhotosUploader photos={field.value} onChange={field.onChange} />
+						)}
+						rules={{
+							required: "房屋照片至少5張以上",
+							validate: {
+								minLength: (value) =>
+									value.length >= 5 || "房屋照片至少需要5張以上",
+							},
+						}}
+					/>
+					{errors.photos && (
+						<span className="text-red-500 ">
+							{errors.photos.message ||
+								(errors.photos.type === "minLength" &&
+									"房屋照片至少需要5張以上")}
+						</span>
+					)}
+				</div>
+				<div className="col-span-2">
+					<h2 className="mt-4 text-2xl">設備與服務</h2>
+					<p className="text-sm text-gray-500">選擇您有提供的設備與服務</p>
+					{errors.perks && (
+						<span className="text-red-500 ">{errors.perks.message}</span>
+					)}
+				</div>
+				<div className="grid grid-cols-2 col-span-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
 					<Controller
 						name="perks"
 						control={control}
 						render={({ field }) => {
 							return <Perks perks={field.value} onChange={field.onChange} />;
 						}}
+						rules={{ required: "設備與服務至少選一項" }}
 					/>
 				</div>
-
-				{/* For Extra Info */}
-				<h2 className="mt-4 text-2xl">Extra Info</h2>
-				<p className="text-sm text-gray-500">House rules, etc</p>
-				<Controller
-					name="extraInfo"
-					control={control}
-					render={({ field }) => <textarea {...field} />}
-				/>
-
-				{/* For Check In & Check Out Times */}
-				<h2 className="mt-4 text-2xl">Check In & Out Times</h2>
-				<p className="text-sm text-gray-500">
-					Add check in and out times, remember to have some time window for
-					cleaning the room between guests
-				</p>
-				<div className="grid grid-cols-2 gap-2 md:grid-cols-4">
+				<div className="col-span-2">
+					<h2 className="mt-4 text-2xl">您的房源屬於哪一種?</h2>
+					{errors.roomType && (
+						<span className="text-red-500 ">{errors.roomType.message}</span>
+					)}
+				</div>
+				<div className="grid grid-cols-2 col-span-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
 					<Controller
-						name="checkIn"
+						name="roomType"
 						control={control}
-						render={({ field }) => (
-							<input {...field} type="text" placeholder="14" />
-						)}
-					/>
-					<Controller
-						name="checkOut"
-						control={control}
-						render={({ field }) => (
-							<input {...field} type="text" placeholder="11" />
-						)}
-					/>
-					<Controller
-						name="maxGuests"
-						control={control}
-						render={({ field }) => <input {...field} type="number" />}
-					/>
-					<Controller
-						name="price"
-						control={control}
-						render={({ field }) => <input {...field} type="number" />}
+						render={({ field }) => {
+							return (
+								<RoomType
+									selectedRoomType={field.value}
+									onChange={field.onChange}
+								/>
+							);
+						}}
+						rules={{ required: "從其中選一項作為你的房源類型" }}
 					/>
 				</div>
+				<div className="col-span-2">
+					<h2 className="mt-4 text-2xl">您的房源範圍是?</h2>
+					{errors.roomRange && (
+						<span className="text-red-500 ">{errors.roomRange.message}</span>
+					)}
 
-				<button className="my-4 primary">Save</button>
+					<div className="grid grid-cols-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
+						<Controller
+							name="roomRange"
+							control={control}
+							render={({ field }) => {
+								return (
+									<RoomRange
+										selectedRoomRange={field.value}
+										onChange={field.onChange}
+									/>
+								);
+							}}
+							rules={{ required: "從其中選一項作為你的房源範圍" }}
+						/>
+					</div>
+				</div>
+				<div>
+					<h2 className="mt-4 text-2xl">更多資訊</h2>
+					<p className="text-sm text-gray-500">房屋規則與介紹,等等...</p>
+					<Controller
+						name="extraInfo"
+						control={control}
+						render={({ field }) => <textarea {...field} />}
+					/>
+				</div>
+				<div>
+					<h2 className="mt-4 text-2xl">入住人數</h2>
+					<p className="text-sm text-gray-500">添加入住人數以及床鋪數量</p>
+					<div className="grid grid-cols-2 gap-2 ">
+						<Controller
+							name="checkIn"
+							control={control}
+							render={({ field }) => (
+								<input {...field} type="text" placeholder="4" />
+							)}
+						/>
+						<Controller
+							name="checkOut"
+							control={control}
+							render={({ field }) => (
+								<input {...field} type="text" placeholder="11" />
+							)}
+						/>
+						<Controller
+							name="maxGuests"
+							control={control}
+							render={({ field }) => <input {...field} type="number" />}
+						/>
+						<Controller
+							name="price"
+							control={control}
+							render={({ field }) => <input {...field} type="number" />}
+						/>
+					</div>
+				</div>
+				<button className="my-4 primary">儲存</button>
 			</form>
 		</div>
 	);

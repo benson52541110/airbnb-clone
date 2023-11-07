@@ -94,6 +94,7 @@ app.post("/api/login", async (req, res) => {
 				{
 					email: userDoc.email,
 					id: userDoc._id,
+					name: userDoc.name,
 				},
 				jwtSecret,
 				{},
@@ -106,7 +107,7 @@ app.post("/api/login", async (req, res) => {
 			res.status(422).json("pass not ok");
 		}
 	} else {
-		res.json("not found");
+		res.status(404).json("not found");
 	}
 });
 
@@ -173,7 +174,7 @@ app.post("/api/places", (req, res) => {
 	const {
 		title,
 		address,
-		addedPhotos,
+		photos,
 		description,
 		price,
 		perks,
@@ -181,6 +182,8 @@ app.post("/api/places", (req, res) => {
 		checkIn,
 		checkOut,
 		maxGuests,
+		roomType,
+		roomRange,
 	} = req.body;
 	jwt.verify(token, jwtSecret, {}, async (err, userData) => {
 		if (err) throw err;
@@ -189,15 +192,16 @@ app.post("/api/places", (req, res) => {
 			price,
 			title,
 			address,
-			photos: addedPhotos,
+			photos,
 			description,
 			perks,
 			extraInfo,
 			checkIn,
 			checkOut,
 			maxGuests,
+			roomType,
+			roomRange,
 		});
-		console.log(placeDoc);
 		res.json(placeDoc);
 	});
 });
@@ -224,7 +228,7 @@ app.put("/api/places", async (req, res) => {
 		id,
 		title,
 		address,
-		addedPhotos,
+		photos,
 		description,
 		perks,
 		extraInfo,
@@ -232,6 +236,8 @@ app.put("/api/places", async (req, res) => {
 		checkOut,
 		maxGuests,
 		price,
+		roomType,
+		roomRange,
 	} = req.body;
 	jwt.verify(token, jwtSecret, {}, async (err, userData) => {
 		if (err) throw err;
@@ -240,7 +246,7 @@ app.put("/api/places", async (req, res) => {
 			placeDoc.set({
 				title,
 				address,
-				photos: addedPhotos,
+				photos,
 				description,
 				perks,
 				extraInfo,
@@ -248,6 +254,8 @@ app.put("/api/places", async (req, res) => {
 				checkOut,
 				maxGuests,
 				price,
+				roomType,
+				roomRange,
 			});
 			await placeDoc.save();
 			res.json("ok");
@@ -263,6 +271,7 @@ app.get("/api/places", async (req, res) => {
 app.post("/api/bookings", async (req, res) => {
 	mongoose.connect(process.env.MONGO_URL);
 	const userData = await getUserDataFromReq(req);
+	console.log(userData);
 	const { place, checkIn, checkOut, numberOfGuests, name, phone, price } =
 		req.body;
 	Booking.create({
