@@ -1,4 +1,5 @@
-import ItemSelect from "./UI/ItemSelect";
+import PerkItem from "./UI/PerkItem";
+import { perksList } from "../data/PlaceFormData";
 
 export default function Perks({ perks, onChange }) {
 	function handleCbClick(ev) {
@@ -9,20 +10,16 @@ export default function Perks({ perks, onChange }) {
 			onChange([...perks.filter((valueName) => valueName !== name)]);
 		}
 	}
-	const perksList = [
-		{ name: "wifi", icon: "mdi:wifi", text: "Wifi" },
-		{ name: "parking", icon: "mdi:parking", text: "免費停車場" },
-		{ name: "tv", icon: "mdi:tv", text: "電視" },
-		{ name: "audio", icon: "mdi:audio", text: "音響" },
-		{ name: "pets", icon: "mdi:pets", text: "寵物" },
-		{ name: "entrance", icon: "mdi:door", text: "私人入口" },
-	];
+
 	return (
 		<>
 			{perksList.map((perk) => (
-				<ItemSelect
+				<PerkItem
 					key={perk.name}
 					list={perk}
+					name={perk.name}
+					icon={perk.icon}
+					text={perk.text}
 					isSelected={perks.includes(perk.name)}
 					onCbClick={handleCbClick}
 				/>
