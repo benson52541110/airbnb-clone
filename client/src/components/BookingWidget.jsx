@@ -94,7 +94,6 @@ export default function BookingWidget({ place }) {
 			</div>
 			<button onClick={bookThisPlace} className="mt-4 primary">
 				預訂
-				{numberOfNights > 0 && <span> ${numberOfNights * place.price}</span>}
 			</button>
 		</div>
 	);

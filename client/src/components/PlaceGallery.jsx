@@ -19,7 +19,7 @@ export default function PlaceGallery({ place }) {
 
 	if (showAllPhotos) {
 		return (
-			<div className="absolute inset-0 flex justify-center min-h-screen text-white bg-white">
+			<div className="absolute inset-0 flex justify-center text-black bg-white h-min">
 				<div className="grid p-12 bg-white">
 					<div>
 						<button

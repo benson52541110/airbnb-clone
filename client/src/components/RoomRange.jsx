@@ -1,4 +1,5 @@
-import ItemSelect from "./UI/ItemSelect";
+import PerkItem from "./UI/PerkItem";
+import { roomRangeList } from "../data/PlaceFormData";
 
 export default function RoomType({ selectedRoomRange, onChange }) {
 	function handleCbClick(ev) {
@@ -6,17 +7,14 @@ export default function RoomType({ selectedRoomRange, onChange }) {
 		onChange(name);
 	}
 
-	const roomRangeList = [
-		{ name: "home", icon: "mdi:home", text: "整套房源" },
-		{ name: "domain", icon: "mdi:domain", text: "一個房間" },
-		{ name: "bus", icon: "mdi:home-account", text: "含住房間" },
-	];
 	return (
 		<>
 			{roomRangeList.map((roomRange) => (
-				<ItemSelect
+				<PerkItem
 					key={roomRange.name}
-					list={roomRange}
+					name={roomRange.name}
+					icon={roomRange.icon}
+					text={roomRange.text}
 					isSelected={selectedRoomRange === roomRange.name}
 					onCbClick={handleCbClick}
 				/>
