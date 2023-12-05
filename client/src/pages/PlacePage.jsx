@@ -16,6 +16,7 @@ export default function PlacePage() {
 		}
 		axios.get(`/places/${id}`).then((response) => {
 			setPlace(response.data);
+			console.log(response.data);
 		});
 	}, [id]);
 
@@ -35,7 +36,6 @@ export default function PlacePage() {
 
 	const renderRoomType = () => {
 		const roomTypeData = roomTypeList.find((rt) => rt.name === place.roomType);
-		// 確保 roomTypeData 存在
 		if (!roomTypeData) {
 			console.error("Room type data not found for:", place.roomType);
 			return null;
@@ -58,7 +58,10 @@ export default function PlacePage() {
 				<div className="flex flex-col gap-8 px-2">
 					<div className="flex flex-col gap-2 py-8 border-b-2">
 						<h2 className="text-2xl font-semibold">出租的 {place.roomType}</h2>
-						<p>6位．1間臥室．5張床．1間衛浴</p>
+						<p>
+							{place.maxGuests}位．{place.room}間臥室．{place.bed}張床．
+							{place.bedroom}間衛浴
+						</p>
 					</div>
 					<div className="py-8 border-b-2">
 						<p>{place.description}</p>
@@ -67,7 +70,7 @@ export default function PlacePage() {
 						{perkItems}
 					</div>
 					<div>
-						<h2 className="text-2xl font-semibold">住宿地點</h2>
+						<h2 className="mb-2 text-2xl font-semibold">住宿地點</h2>
 						{renderRoomType()}
 					</div>
 				</div>
@@ -77,7 +80,7 @@ export default function PlacePage() {
 			</div>
 			<div className="px-8 py-8 -mx-8 bg-white border-t">
 				<div>
-					<h2 className="text-2xl font-semibold">額外資訊</h2>
+					<h2 className="mb-2 text-2xl font-semibold">額外資訊</h2>
 				</div>
 				<div className="mt-2 mb-4 text-sm leading-5 text-gray-700">
 					{place.extraInfo}

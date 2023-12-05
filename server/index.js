@@ -184,6 +184,9 @@ app.post("/api/places", (req, res) => {
 		maxGuests,
 		roomType,
 		roomRange,
+		bed,
+		room,
+		bedroom,
 	} = req.body;
 	jwt.verify(token, jwtSecret, {}, async (err, userData) => {
 		if (err) throw err;
@@ -201,6 +204,9 @@ app.post("/api/places", (req, res) => {
 			maxGuests,
 			roomType,
 			roomRange,
+			bed,
+			room,
+			bedroom,
 		});
 		res.json(placeDoc);
 	});
@@ -238,6 +244,9 @@ app.put("/api/places", async (req, res) => {
 		price,
 		roomType,
 		roomRange,
+		bed,
+		room,
+		bedroom,
 	} = req.body;
 	jwt.verify(token, jwtSecret, {}, async (err, userData) => {
 		if (err) throw err;
@@ -256,6 +265,9 @@ app.put("/api/places", async (req, res) => {
 				price,
 				roomType,
 				roomRange,
+				bed,
+				room,
+				bedroom,
 			});
 			await placeDoc.save();
 			res.json("ok");

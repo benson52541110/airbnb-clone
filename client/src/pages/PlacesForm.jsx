@@ -28,6 +28,9 @@ export default function PlacesFormPage() {
 			price: "",
 			roomType: "",
 			roomRange: "",
+			room: "",
+			bed: "",
+			bedroom: "",
 		},
 	});
 	const [redirect, setRedirect] = useState(false);
@@ -234,19 +237,12 @@ export default function PlacesFormPage() {
 					</div>
 				</div>
 				<div>
-					<h2 className="mt-4 text-2xl">更多資訊</h2>
-					<p className="text-sm text-gray-500">房屋規則與介紹,等等...</p>
-					<Controller
-						name="extraInfo"
-						control={control}
-						render={({ field }) => <textarea {...field} />}
-					/>
-				</div>
-				<div>
-					<h2 className="mt-4 text-2xl">入住人數</h2>
-					<p className="text-sm text-gray-500">添加入住人數以及床鋪數量</p>
+					<h2 className="mt-4 text-2xl">房間設定</h2>
+					<p className="text-sm text-gray-500">
+						添加入住人數以及床鋪數量等等...
+					</p>
 					<div className="grid grid-cols-2 gap-2 ">
-						<Controller
+						{/* <Controller
 							name="checkIn"
 							control={control}
 							render={({ field }) => (
@@ -259,19 +255,59 @@ export default function PlacesFormPage() {
 							render={({ field }) => (
 								<input {...field} type="text" placeholder="11" />
 							)}
-						/>
-						<Controller
-							name="maxGuests"
-							control={control}
-							render={({ field }) => <input {...field} type="number" />}
-						/>
-						<Controller
-							name="price"
-							control={control}
-							render={({ field }) => <input {...field} type="number" />}
-						/>
+						/> */}
+						<div className="flex items-center">
+							<h3 className=" whitespace-nowrap mr-2">最大人數</h3>
+							<Controller
+								name="maxGuests"
+								control={control}
+								render={({ field }) => (
+									<input {...field} type="number" placeholder="最多人數" />
+								)}
+							/>
+						</div>
+						<div className="flex items-center">
+							<h3 className=" whitespace-nowrap mr-2">房間數量</h3>
+							<Controller
+								name="room"
+								control={control}
+								render={({ field }) => (
+									<input {...field} type="number" placeholder="房間數量" />
+								)}
+							/>
+						</div>
+						<div className="flex items-center">
+							<h3 className=" whitespace-nowrap mr-2">床鋪數量</h3>
+							<Controller
+								name="bed"
+								control={control}
+								render={({ field }) => (
+									<input {...field} type="number" placeholder="床鋪數量" />
+								)}
+							/>
+						</div>
+						<div className="flex items-center">
+							<h3 className=" whitespace-nowrap mr-2">衛浴數量</h3>
+							<Controller
+								name="bedroom"
+								control={control}
+								render={({ field }) => (
+									<input {...field} type="number" placeholder="衛浴數量" />
+								)}
+							/>
+						</div>
 					</div>
 				</div>
+				<div>
+					<h2 className="mt-4 text-2xl">更多資訊</h2>
+					<p className="text-sm text-gray-500">房屋規則與介紹,等等...</p>
+					<Controller
+						name="extraInfo"
+						control={control}
+						render={({ field }) => <textarea {...field} />}
+					/>
+				</div>
+
 				<button className="my-4 primary">儲存</button>
 			</form>
 		</div>

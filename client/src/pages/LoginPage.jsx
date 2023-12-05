@@ -24,7 +24,6 @@ export default function LoginPage() {
 				email,
 				password,
 			});
-			console.log(userData);
 			dispatch(setUser(userData));
 			setNotification({ type: "success", message: "登入成功" });
 			setRedirect(true);
