@@ -2,9 +2,10 @@ import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "../utils/axios.js";
 import { useForm, Controller } from "react-hook-form";
-import Notification from "../components/Notification";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser, fetchUserProfile } from "../state/user/userSlice.js";
+import { setUser, fetchUserProfile } from "../state/slices/userSlice.js";
+import { showNotification } from "../state/slices/notificationSlice";
+import Notification from "../components/Notification.jsx";
 
 export default function LoginPage() {
 	const {
@@ -14,8 +15,7 @@ export default function LoginPage() {
 	} = useForm();
 	const [redirect, setRedirect] = useState(false);
 	const dispatch = useDispatch();
-	const { user, error, ready } = useSelector((state) => state.user);
-	const [notification, setNotification] = useState({ type: "", message: "" });
+	const notification = useSelector((state) => state.notification);
 
 	async function handleLoginSubmit(formData) {
 		const { email, password } = formData;
@@ -25,10 +25,10 @@ export default function LoginPage() {
 				password,
 			});
 			dispatch(setUser(userData));
-			setNotification({ type: "success", message: "登入成功" });
+			dispatch(showNotification({ type: "success", message: "登入成功" }));
 			setRedirect(true);
 		} catch (e) {
-			setNotification({ type: "error", message: "登入失敗" });
+			dispatch(showNotification({ type: "error", message: "登入失敗" }));
 		}
 	}
 
@@ -89,7 +89,7 @@ export default function LoginPage() {
 						</Link>
 					</div>
 				</form>
-				{notification.message && (
+				{notification && (
 					<Notification
 						type={notification.type}
 						message={notification.message}

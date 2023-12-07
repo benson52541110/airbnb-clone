@@ -3,7 +3,7 @@ import { useContext, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import axios from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../state/user/userSlice.js";
+import { setUser } from "../state/slices/userSlice.js";
 
 export default function Header() {
 	const { user, ready } = useSelector((state) => state.user);

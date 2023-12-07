@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import axios from "../utils/axios";
 import { useForm, Controller } from "react-hook-form";
 
@@ -9,13 +8,10 @@ export default function RegisterPage() {
 		control,
 		formState: { errors },
 	} = useForm();
-	async function registerUser(ev) {
-		ev.preventDefault();
+	async function registerUser(data) {
 		try {
 			await axios.post("/register", {
-				name,
-				email,
-				password,
+				data,
 			});
 			alert("Registration successful. Now you can log in");
 		} catch (e) {
