@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { differenceInCalendarDays } from "date-fns";
-import axios from "axios";
+import axios from "../utils/axios";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
