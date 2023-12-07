@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { Navigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import PhotosUploader from "../components/PhotosUploader";
 import Perks from "../components/Perks";
-import RoomType from "../components/RoomType";
-import RoomRange from "../components/RoomRange";
+import RoomSelect from "../components/RoomSelect";
 
 export default function PlacesFormPage() {
 	const { id } = useParams();
+	const { user } = useSelector((state) => state.user);
+	console.log(user.name);
 	const {
 		handleSubmit,
 		control,
@@ -28,9 +30,11 @@ export default function PlacesFormPage() {
 			price: "",
 			roomType: "",
 			roomRange: "",
+			roomCategory: "",
 			room: "",
 			bed: "",
 			bedroom: "",
+			landlord: user.name,
 		},
 	});
 	const [redirect, setRedirect] = useState(false);
@@ -53,6 +57,7 @@ export default function PlacesFormPage() {
 	}, [id, setValue]);
 
 	const onSubmit = async (data) => {
+		console.log(data);
 		if (id) {
 			await axios.put("/places/", { id, ...data });
 		} else {
@@ -205,8 +210,9 @@ export default function PlacesFormPage() {
 						control={control}
 						render={({ field }) => {
 							return (
-								<RoomType
-									selectedRoomType={field.value}
+								<RoomSelect
+									title="roomType"
+									selected={field.value}
 									onChange={field.onChange}
 								/>
 							);
@@ -226,8 +232,32 @@ export default function PlacesFormPage() {
 							control={control}
 							render={({ field }) => {
 								return (
-									<RoomRange
-										selectedRoomRange={field.value}
+									<RoomSelect
+										title="roomRange"
+										selected={field.value}
+										onChange={field.onChange}
+									/>
+								);
+							}}
+							rules={{ required: "從其中選一項作為你的房源範圍" }}
+						/>
+					</div>
+				</div>
+				<div className="col-span-2">
+					<h2 className="mt-4 text-2xl">您的房源種類是?</h2>
+					{errors.roomCategory && (
+						<span className="text-red-500 ">{errors.roomCategory.message}</span>
+					)}
+
+					<div className="grid grid-cols-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
+						<Controller
+							name="roomCategory"
+							control={control}
+							render={({ field }) => {
+								return (
+									<RoomSelect
+										title="roomCategory"
+										selected={field.value}
 										onChange={field.onChange}
 									/>
 								);
@@ -238,26 +268,10 @@ export default function PlacesFormPage() {
 				</div>
 				<div>
 					<h2 className="mt-4 text-2xl">房間設定</h2>
-					<p className="text-sm text-gray-500">
-						添加入住人數以及床鋪數量等等...
-					</p>
-					<div className="grid grid-cols-2 gap-2 ">
-						{/* <Controller
-							name="checkIn"
-							control={control}
-							render={({ field }) => (
-								<input {...field} type="text" placeholder="4" />
-							)}
-						/>
-						<Controller
-							name="checkOut"
-							control={control}
-							render={({ field }) => (
-								<input {...field} type="text" placeholder="11" />
-							)}
-						/> */}
+					<p className="text-sm text-gray-500">添加入住人數以及床鋪數量</p>
+					<div className="grid grid-cols-1 gap-2 md:grid-cols-2 ">
 						<div className="flex items-center">
-							<h3 className=" whitespace-nowrap mr-2">最大人數</h3>
+							<h3 className="mr-2 whitespace-nowrap">最大人數</h3>
 							<Controller
 								name="maxGuests"
 								control={control}
@@ -267,7 +281,7 @@ export default function PlacesFormPage() {
 							/>
 						</div>
 						<div className="flex items-center">
-							<h3 className=" whitespace-nowrap mr-2">房間數量</h3>
+							<h3 className="mr-2 whitespace-nowrap">房間數量</h3>
 							<Controller
 								name="room"
 								control={control}
@@ -277,7 +291,7 @@ export default function PlacesFormPage() {
 							/>
 						</div>
 						<div className="flex items-center">
-							<h3 className=" whitespace-nowrap mr-2">床鋪數量</h3>
+							<h3 className="mr-2 whitespace-nowrap">床鋪數量</h3>
 							<Controller
 								name="bed"
 								control={control}
@@ -287,7 +301,7 @@ export default function PlacesFormPage() {
 							/>
 						</div>
 						<div className="flex items-center">
-							<h3 className=" whitespace-nowrap mr-2">衛浴數量</h3>
+							<h3 className="mr-2 whitespace-nowrap">衛浴數量</h3>
 							<Controller
 								name="bedroom"
 								control={control}
@@ -300,7 +314,7 @@ export default function PlacesFormPage() {
 				</div>
 				<div>
 					<h2 className="mt-4 text-2xl">更多資訊</h2>
-					<p className="text-sm text-gray-500">房屋規則與介紹,等等...</p>
+					<p className="text-sm text-gray-500">房屋規則與介紹</p>
 					<Controller
 						name="extraInfo"
 						control={control}

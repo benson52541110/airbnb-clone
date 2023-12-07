@@ -10,6 +10,7 @@ export default function AddressLink({ children, className = null }) {
 			className={className}
 			target="_blank"
 			href={"https://maps.google.com/?q=" + children}
+			rel="noreferrer"
 		>
 			<Icon icon="bxs:map" />
 			{children}

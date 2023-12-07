@@ -57,7 +57,9 @@ export default function PlacePage() {
 			<div className="mt-8 mb-8 grid gap-8 grid-cols-1 md:grid-cols-[2fr_1fr]">
 				<div className="flex flex-col gap-8 px-2">
 					<div className="flex flex-col gap-2 py-8 border-b-2">
-						<h2 className="text-2xl font-semibold">出租的 {place.roomType}</h2>
+						<h2 className="text-2xl font-semibold">
+							{place.landlord}出租的 {place.roomType}
+						</h2>
 						<p>
 							{place.maxGuests}位．{place.room}間臥室．{place.bed}張床．
 							{place.bedroom}間衛浴
@@ -83,7 +85,7 @@ export default function PlacePage() {
 					<h2 className="mb-2 text-2xl font-semibold">額外資訊</h2>
 				</div>
 				<div className="mt-2 mb-4 text-sm leading-5 text-gray-700">
-					{place.extraInfo}
+					{place?.extraInfo}
 				</div>
 			</div>
 		</div>

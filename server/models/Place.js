@@ -14,9 +14,11 @@ const placeSchema = new mongoose.Schema({
 	price: Number,
 	roomType: String,
 	roomRange: String,
+	roomCategory: String,
 	bed: Number,
 	room: Number,
 	bedroom: Number,
+	landlord: String,
 });
 
 const PlaceModel = mongoose.model("Place", placeSchema);
