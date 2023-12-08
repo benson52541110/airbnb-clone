@@ -12,6 +12,18 @@ export default function BookingsPage() {
 			setBookings(response.data);
 		});
 	}, []);
+	const deleteBooking = (bookingId) => {
+		axios
+			.delete(`/bookings/${bookingId}`)
+			.then(() => {
+				// 從列表中移除被刪除的預訂
+				setBookings(bookings.filter((booking) => booking._id !== bookingId));
+			})
+			.catch((err) => {
+				// 處理錯誤情況
+				console.error("刪除預訂時出錯：", err);
+			});
+	};
 	return (
 		<div>
 			<div>
@@ -37,6 +49,7 @@ export default function BookingsPage() {
 									</div>
 								</div>
 							</div>
+							<button onClick={() => deleteBooking(booking._id)}>刪除</button>
 						</Link>
 					))}
 			</div>

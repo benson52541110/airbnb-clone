@@ -318,4 +318,32 @@ app.get("/api/bookings", async (req, res) => {
 	res.json(await Booking.find({ user: userData.id }).populate("place"));
 });
 
+app.delete("/api/bookings/:bookingId", async (req, res) => {
+	try {
+		// 連接到 MongoDB
+		mongoose.connect(process.env.MONGO_URL);
+
+		// 獲取發起請求的用戶數據
+		const userData = await getUserDataFromReq(req);
+
+		// 從請求的 URL 中獲取 bookingId
+		const { bookingId } = req.params;
+
+		// 查找並驗證預訂是否存在且屬於當前用戶
+		const booking = await Booking.findOne({
+			_id: bookingId,
+			user: userData.id,
+		});
+		if (!booking) {
+			return res.status(404).json({ message: "預訂不存在或不屬於該用戶。" });
+		}
+
+		// 刪除預訂
+		await Booking.deleteOne({ _id: bookingId });
+		res.json({ message: "預訂已成功刪除。" });
+	} catch (err) {
+		res.status(500).json({ message: err.message });
+	}
+});
+
 app.listen(4000);
