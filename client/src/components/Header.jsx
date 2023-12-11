@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useRef, useState } from "react";
+import { useState } from "react";
 import { Icon } from "@iconify/react";
 import axios from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../state/slices/userSlice.js";
 
 export default function Header() {
-	const { user, ready } = useSelector((state) => state.user);
+	const { user } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();

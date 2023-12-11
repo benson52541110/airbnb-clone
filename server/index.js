@@ -206,7 +206,7 @@ app.post("/api/places", async (req, res) => {
 		photos,
 		description,
 		price,
-		perks,
+		listSelection,
 		extraInfo,
 		checkIn,
 		checkOut,
@@ -239,7 +239,7 @@ app.post("/api/places", async (req, res) => {
 			address,
 			photos,
 			description,
-			perks,
+			listSelection,
 			extraInfo,
 			checkIn,
 			checkOut,
@@ -261,8 +261,11 @@ app.post("/api/places", async (req, res) => {
 app.get("/api/user-places", async (req, res) => {
 	const { token } = req.cookies;
 
+	if (!token) {
+		return res.status(401).json({ error: "JWT must be provided" });
+	}
+
 	try {
-		// 使用 Promise 和 async/await 来处理 JWT 验证
 		const userData = await new Promise((resolve, reject) => {
 			jwt.verify(token, jwtSecret, {}, (err, decoded) => {
 				if (err) {
@@ -301,7 +304,7 @@ app.put("/api/places", async (req, res) => {
 		address,
 		photos,
 		description,
-		perks,
+		listSelection,
 		extraInfo,
 		checkIn,
 		checkOut,
@@ -339,7 +342,7 @@ app.put("/api/places", async (req, res) => {
 				address,
 				photos,
 				description,
-				perks,
+				listSelection,
 				extraInfo,
 				checkIn,
 				checkOut,

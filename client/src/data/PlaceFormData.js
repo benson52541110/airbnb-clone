@@ -1,4 +1,4 @@
-export const perksList = [
+export const servicesList = [
 	{ name: "wifi", icon: "wifi", text: "Wifi" },
 	{ name: "parking", icon: "parking", text: "免費停車場" },
 	{ name: "tv", icon: "tv", text: "電視" },

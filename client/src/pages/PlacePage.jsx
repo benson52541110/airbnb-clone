@@ -4,7 +4,7 @@ import axios from "../utils/axios";
 import BookingWidget from "../components/BookingWidget";
 import PlaceGallery from "../components/PlaceGallery";
 import AddressLink from "../components/AddressLink";
-import { perksList, roomTypeList } from "../data/PlaceFormData";
+import { servicesList, roomTypeList } from "../data/PlaceFormData";
 import PerkItem from "../components/UI/PerkItem";
 
 export default function PlacePage() {
@@ -22,8 +22,8 @@ export default function PlacePage() {
 
 	if (!place) return "";
 
-	const perkItems = place.perks?.map((perk) => {
-		const perkData = perksList.find((perkData) => perkData.name === perk);
+	const perkItems = place.listSelection?.map((perk) => {
+		const perkData = servicesList.find((perkData) => perkData.name === perk);
 		return (
 			<PerkItem
 				key={perkData.name}

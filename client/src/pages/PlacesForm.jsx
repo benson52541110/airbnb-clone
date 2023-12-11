@@ -4,8 +4,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import PhotosUploader from "../components/PhotosUploader";
-import Perks from "../components/Perks";
-import RoomSelect from "../components/RoomSelect";
+import ListSelection from "../components/ListSelection";
 
 export default function PlacesFormPage() {
 	const { id } = useParams();
@@ -22,7 +21,7 @@ export default function PlacesFormPage() {
 			address: "",
 			photos: [],
 			description: "",
-			perks: [],
+			listSelection: [],
 			extraInfo: "",
 			checkIn: "",
 			checkOut: "",
@@ -184,16 +183,25 @@ export default function PlacesFormPage() {
 				<div className="col-span-2">
 					<h2 className="mt-4 text-2xl">設備與服務</h2>
 					<p className="text-sm text-gray-500">選擇您有提供的設備與服務</p>
-					{errors.perks && (
-						<span className="text-red-500 ">{errors.perks.message}</span>
+					{errors.listSelection && (
+						<span className="text-red-500 ">
+							{errors.listSelection.message}
+						</span>
 					)}
 				</div>
 				<div className="grid grid-cols-2 col-span-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
 					<Controller
-						name="perks"
+						name="listSelection"
 						control={control}
 						render={({ field }) => {
-							return <Perks perks={field.value} onChange={field.onChange} />;
+							return (
+								<ListSelection
+									selectedItems={field.value}
+									onChange={field.onChange}
+									isMultiSelect={true}
+									title="services"
+								/>
+							);
 						}}
 						rules={{ required: "設備與服務至少選一項" }}
 					/>
@@ -210,7 +218,8 @@ export default function PlacesFormPage() {
 						control={control}
 						render={({ field }) => {
 							return (
-								<RoomSelect
+								<ListSelection
+									selectedItems={field.value}
 									title="roomType"
 									selected={field.value}
 									onChange={field.onChange}
@@ -232,7 +241,8 @@ export default function PlacesFormPage() {
 							control={control}
 							render={({ field }) => {
 								return (
-									<RoomSelect
+									<ListSelection
+										selectedItems={field.value}
 										title="roomRange"
 										selected={field.value}
 										onChange={field.onChange}
@@ -255,7 +265,8 @@ export default function PlacesFormPage() {
 							control={control}
 							render={({ field }) => {
 								return (
-									<RoomSelect
+									<ListSelection
+										selectedItems={field.value}
 										title="roomCategory"
 										selected={field.value}
 										onChange={field.onChange}
