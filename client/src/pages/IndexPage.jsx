@@ -24,7 +24,11 @@ export default function IndexPage() {
 				onCategorySelect={(category) => setSelectedCategory(category)}
 			></Category>
 			<div className="grid grid-cols-1 mt-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-x-6 gap-y-8">
-				<RoomCard places={filteredPlaces} url={"/place/"}></RoomCard>
+				<RoomCard
+					places={filteredPlaces}
+					url={"/place/"}
+					title="index"
+				></RoomCard>
 			</div>
 		</div>
 	);

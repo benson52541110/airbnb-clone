@@ -31,7 +31,6 @@ export default function PlaceGallery({ place }) {
 					</div>
 					<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 						{place?.photos?.map((photo, index) => {
-							// 計算每張圖片應該占據的列數
 							const colSpan =
 								index % 3 === 0 ? "md:col-span-2" : "md:col-span-1";
 							return (

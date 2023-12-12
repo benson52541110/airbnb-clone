@@ -198,66 +198,6 @@ app.post(
 	}
 );
 
-app.post("/api/places", async (req, res) => {
-	const { token } = req.cookies;
-	const {
-		title,
-		address,
-		photos,
-		description,
-		price,
-		listSelection,
-		extraInfo,
-		checkIn,
-		checkOut,
-		maxGuests,
-		roomType,
-		roomRange,
-		roomCategory,
-		bed,
-		room,
-		bedroom,
-		landlord,
-	} = req.body;
-
-	try {
-		// 使用 Promise 和 async/await 来处理 JWT 验证
-		const userData = await new Promise((resolve, reject) => {
-			jwt.verify(token, jwtSecret, {}, (err, decoded) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(decoded);
-				}
-			});
-		});
-
-		const placeDoc = await Place.create({
-			owner: userData.id,
-			price,
-			title,
-			address,
-			photos,
-			description,
-			listSelection,
-			extraInfo,
-			checkIn,
-			checkOut,
-			maxGuests,
-			roomType,
-			roomRange,
-			roomCategory,
-			bed,
-			room,
-			bedroom,
-			landlord: userData.name,
-		});
-		res.json(placeDoc);
-	} catch (err) {
-		res.status(500).json({ error: err.message });
-	}
-});
-
 app.get("/api/user-places", async (req, res) => {
 	const { token } = req.cookies;
 
@@ -296,6 +236,74 @@ app.get("/api/places/:id", async (req, res) => {
 	}
 });
 
+app.get("/api/places", async (req, res) => {
+	try {
+		const places = await Place.find();
+		res.json(places);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+});
+
+app.post("/api/places", async (req, res) => {
+	const { token } = req.cookies;
+	const {
+		title,
+		address,
+		photos,
+		description,
+		price,
+		listSelection,
+		extraInfo,
+		checkIn,
+		checkOut,
+		maxGuests,
+		roomType,
+		roomRange,
+		roomCategory,
+		bed,
+		room,
+		bedroom,
+		landlord,
+	} = req.body;
+
+	try {
+		const userData = await new Promise((resolve, reject) => {
+			jwt.verify(token, jwtSecret, {}, (err, decoded) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(decoded);
+				}
+			});
+		});
+
+		const placeDoc = await Place.create({
+			owner: userData.id,
+			price,
+			title,
+			address,
+			photos,
+			description,
+			listSelection,
+			extraInfo,
+			checkIn,
+			checkOut,
+			maxGuests,
+			roomType,
+			roomRange,
+			roomCategory,
+			bed,
+			room,
+			bedroom,
+			landlord: userData.name,
+		});
+		res.json(placeDoc);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+});
+
 app.put("/api/places", async (req, res) => {
 	const { token } = req.cookies;
 	const {
@@ -320,7 +328,6 @@ app.put("/api/places", async (req, res) => {
 	} = req.body;
 
 	try {
-		// 使用 Promise 和 async/await 来处理 JWT 验证
 		const userData = await new Promise((resolve, reject) => {
 			jwt.verify(token, jwtSecret, {}, (err, decoded) => {
 				if (err) {
@@ -366,10 +373,44 @@ app.put("/api/places", async (req, res) => {
 	}
 });
 
-app.get("/api/places", async (req, res) => {
+app.delete("/api/places/:id", async (req, res) => {
+	const { id } = req.params;
+	const { token } = req.cookies;
+
 	try {
-		const places = await Place.find();
-		res.json(places);
+		const userData = await new Promise((resolve, reject) => {
+			jwt.verify(token, jwtSecret, {}, (err, decoded) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(decoded);
+				}
+			});
+		});
+
+		const placeDoc = await Place.findById(id);
+		if (!placeDoc) {
+			return res.status(404).json({ error: "Place not found" });
+		}
+
+		if (userData.id === placeDoc.owner.toString()) {
+			await Place.deleteOne({ _id: id });
+			res.json({ message: "Place deleted successfully" });
+		} else {
+			res.status(403).json({ error: "Unauthorized to delete this place" });
+		}
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+});
+
+app.get("/api/bookings", async (req, res) => {
+	try {
+		const userData = await getUserDataFromReq(req);
+		const bookings = await Booking.find({ user: userData.id }).populate(
+			"place"
+		);
+		res.json(bookings);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
 	}
@@ -397,26 +438,12 @@ app.post("/api/bookings", async (req, res) => {
 	}
 });
 
-app.get("/api/bookings", async (req, res) => {
-	try {
-		const userData = await getUserDataFromReq(req);
-		const bookings = await Booking.find({ user: userData.id }).populate(
-			"place"
-		);
-		res.json(bookings);
-	} catch (err) {
-		res.status(500).json({ error: err.message });
-	}
-});
-
 app.delete("/api/bookings/:bookingId", async (req, res) => {
 	try {
 		const userData = await getUserDataFromReq(req);
 
-		// 從請求的 URL 中獲取 bookingId
 		const { bookingId } = req.params;
 
-		// 查找並驗證預訂是否存在且屬於當前用戶
 		const booking = await Booking.findOne({
 			_id: bookingId,
 			user: userData.id,
@@ -425,7 +452,6 @@ app.delete("/api/bookings/:bookingId", async (req, res) => {
 			return res.status(404).json({ message: "預訂不存在或不屬於該用戶。" });
 		}
 
-		// 刪除預訂
 		await Booking.deleteOne({ _id: bookingId });
 		res.json({ message: "預訂已成功刪除。" });
 	} catch (err) {

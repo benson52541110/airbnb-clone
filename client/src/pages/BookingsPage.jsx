@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "../utils/axios";
-import PlaceImg from "../components/PlaceImg";
-import { differenceInCalendarDays, format } from "date-fns";
+import { Icon } from "@iconify/react";
+import Image from "../components/Image";
 import { Link } from "react-router-dom";
 import BookingDates from "../components/BookingDates";
 
@@ -12,30 +12,31 @@ export default function BookingsPage() {
 			setBookings(response.data);
 		});
 	}, []);
-	const deleteBooking = (bookingId) => {
+	const deleteBooking = (event, bookingId) => {
+		event.stopPropagation();
 		axios
 			.delete(`/bookings/${bookingId}`)
 			.then(() => {
-				// 從列表中移除被刪除的預訂
 				setBookings(bookings.filter((booking) => booking._id !== bookingId));
 			})
 			.catch((err) => {
-				// 處理錯誤情況
 				console.error("刪除預訂時出錯：", err);
 			});
 	};
 	return (
-		<div>
-			<div>
-				{bookings?.length > 0 &&
-					bookings.map((booking) => (
+		<div className="grid grid-cols-2 mt-4">
+			{bookings?.length > 0 &&
+				bookings.map((booking) => (
+					<div key={booking._id} className="relative ">
 						<Link
 							to={`/account/bookings/${booking._id}`}
 							className="flex gap-4 overflow-hidden bg-gray-200 rounded-2xl"
-							key={booking._id}
 						>
-							<div className="w-48">
-								<PlaceImg place={booking.place} />
+							<div className="w-48 p-2">
+								<Image
+									className="object-cover w-full h-full rounded-2xl aspect-square"
+									src={booking.place.photos[0]}
+								/>
 							</div>
 							<div className="py-3 pr-3 grow">
 								<h2 className="text-xl">{booking.place.title}</h2>
@@ -49,10 +50,14 @@ export default function BookingsPage() {
 									</div>
 								</div>
 							</div>
-							<button onClick={() => deleteBooking(booking._id)}>刪除</button>
 						</Link>
-					))}
-			</div>
+						<Icon
+							className="absolute text-lg cursor-pointer top-2 right-2 hover:bg-gray-300"
+							onClick={(e) => deleteBooking(e, booking._id)}
+							icon="mdi:close"
+						></Icon>
+					</div>
+				))}
 		</div>
 	);
 }

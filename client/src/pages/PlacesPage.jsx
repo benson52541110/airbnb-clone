@@ -22,7 +22,7 @@ export default function PlacesPage() {
 				</Link>
 			</div>
 			<div className="grid grid-cols-1 mt-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-x-6 gap-y-8">
-				<RoomCard places={places} url={"/account/places/"} />
+				<RoomCard places={places} url={"/account/places/"} title="places" />
 			</div>
 		</div>
 	);
