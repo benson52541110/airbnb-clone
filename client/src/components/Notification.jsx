@@ -29,7 +29,7 @@ function Notification() {
 
 	return (
 		<div
-			className={`py-4 px-8 fixed top-24 right-24 text-sm rounded-lg ${
+			className={`py-4 px-8 fixed top-24 right-24 text-sm rounded-lg z-50 ${
 				bgColor[notification.type]
 			} ${textColor[notification.type]}`}
 			role="alert"

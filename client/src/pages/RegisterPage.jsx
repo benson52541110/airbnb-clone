@@ -97,7 +97,6 @@ export default function RegisterPage() {
 					</div>
 				</form>
 			</div>
-			{/* Notification */}
 			{notification && (
 				<Notification type={notification.type} message={notification.message} />
 			)}
