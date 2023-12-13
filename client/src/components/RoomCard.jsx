@@ -84,7 +84,7 @@ export default function RoomCard({ places, url, title }) {
 						)}
 						{title === "index" && (
 							<div className="absolute text-2xl cursor-pointer right-4 top-4 ">
-								<Favorite name={place.landlord}></Favorite>
+								<Favorite id={place._id}></Favorite>
 							</div>
 						)}
 					</div>

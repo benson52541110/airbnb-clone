@@ -1,21 +1,31 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../utils/axios";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { showNotification } from "../state/slices/notificationSlice";
+import Notification from "../components/Notification";
 
 export default function RegisterPage() {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const notification = useSelector((state) => state.notification);
+
 	const {
 		handleSubmit,
 		control,
 		formState: { errors },
 	} = useForm();
+
 	async function registerUser(data) {
 		try {
 			await axios.post("/register", data);
-			alert("Registration successful. Now you can log in");
+			navigate("/login");
+			dispatch(showNotification({ type: "success", message: "註冊成功" }));
 		} catch (e) {
-			alert("Registration failed. Please try again later");
+			dispatch(showNotification({ type: "error", message: "註冊失敗" }));
 		}
 	}
+
 	return (
 		<div className="flex items-center justify-around mt-4 grow">
 			<div className="mb-64">
@@ -36,8 +46,9 @@ export default function RegisterPage() {
 						)}
 					/>
 					{errors.name && (
-						<span className="text-red-500 ">{errors.name.message}</span>
+						<span className="text-red-500">{errors.name.message}</span>
 					)}
+
 					<Controller
 						name="email"
 						control={control}
@@ -54,7 +65,7 @@ export default function RegisterPage() {
 						)}
 					/>
 					{errors.email && (
-						<span className="text-red-500 ">{errors.email.message}</span>
+						<span className="text-red-500">{errors.email.message}</span>
 					)}
 
 					<Controller
@@ -73,9 +84,11 @@ export default function RegisterPage() {
 						)}
 					/>
 					{errors.password && (
-						<span className="text-red-500 ">{errors.password.message}</span>
+						<span className="text-red-500">{errors.password.message}</span>
 					)}
+
 					<button className="mt-2 primary">註冊</button>
+
 					<div className="py-2 text-center text-gray-500">
 						已擁有帳號?{" "}
 						<Link className="ml-2 text-black underline" to={"/login"}>
@@ -84,6 +97,10 @@ export default function RegisterPage() {
 					</div>
 				</form>
 			</div>
+			{/* Notification */}
+			{notification && (
+				<Notification type={notification.type} message={notification.message} />
+			)}
 		</div>
 	);
 }

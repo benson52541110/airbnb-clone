@@ -134,25 +134,14 @@ app.post("/api/login", async (req, res) => {
 
 app.put("/api/favorites", async (req, res) => {
 	try {
-		const { name, favorites } = req.body;
-		const userDoc = await User.findOne({ name });
-		if (userDoc) {
-			try {
-				if (!userDoc) {
-					return res.status(404).json({ error: "Place not found" });
-				}
-				userDoc.set({
-					favorites,
-					...userDoc,
-				});
-				await userDoc.save();
-				res.json("ok");
-			} catch (err) {
-				res.status(500).json({ error: err.message });
-			}
-		} else {
-			res.status(404).json("not found");
+		const { email, favorites } = req.body;
+		const userDoc = await User.findOne({ email });
+		if (!userDoc) {
+			return res.status(404).json({ error: "User not found" });
 		}
+		userDoc.favorites = favorites;
+		await userDoc.save();
+		res.json(userDoc);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
 	}

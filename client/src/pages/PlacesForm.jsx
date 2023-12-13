@@ -9,7 +9,6 @@ import ListSelection from "../components/ListSelection";
 export default function PlacesFormPage() {
 	const { id } = useParams();
 	const { user } = useSelector((state) => state.user);
-	console.log(user.name);
 	const {
 		handleSubmit,
 		control,
@@ -56,7 +55,6 @@ export default function PlacesFormPage() {
 	}, [id, setValue]);
 
 	const onSubmit = async (data) => {
-		console.log(data);
 		if (id) {
 			await axios.put("/places/", { id, ...data });
 		} else {

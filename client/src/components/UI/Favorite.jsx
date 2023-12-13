@@ -1,24 +1,32 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../state/slices/userSlice.js";
+import axios from "../../utils/axios.js";
 
-const Favorite = ({ landlord }) => {
-	const [selected, setSelected] = useState(false);
+const Favorite = ({ id }) => {
 	const { user } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
+	const isFavorite = user && user.favorites.includes(id);
+	const [selected, setSelected] = useState(isFavorite);
 
 	const toggleFill = () => {
+		if (!user) {
+			return;
+		}
+
 		const newSelected = !selected;
 		setSelected(newSelected);
-
-		if (newSelected) {
-			// 如果現在是選中狀態，添加到收藏
-			dispatch(updateFavorites([...favorites, landlord]));
-		} else {
-			// 如果取消選中，從收藏中移除
-			dispatch(
-				updateFavorites(favorites.filter((item) => item.id !== landlord.id))
-			);
-		}
+		let updatedFavorites = newSelected
+			? [...user.favorites, id]
+			: user.favorites.filter((fav) => fav !== id);
+		axios
+			.put("/favorites", {
+				...user,
+				favorites: updatedFavorites,
+			})
+			.then((res) => {
+				dispatch(setUser(res.data));
+			});
 	};
 
 	return (
