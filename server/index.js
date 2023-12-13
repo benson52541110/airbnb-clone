@@ -90,6 +90,7 @@ app.post("/api/register", async (req, res) => {
 			name,
 			email,
 			password: bcrypt.hashSync(password, bcryptSalt),
+			favorites: [],
 		});
 		res.json(userDoc);
 	} catch (e) {
@@ -122,6 +123,32 @@ app.post("/api/login", async (req, res) => {
 				);
 			} else {
 				res.status(422).json("pass not ok");
+			}
+		} else {
+			res.status(404).json("not found");
+		}
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+});
+
+app.put("/api/favorites", async (req, res) => {
+	try {
+		const { name, favorites } = req.body;
+		const userDoc = await User.findOne({ name });
+		if (userDoc) {
+			try {
+				if (!userDoc) {
+					return res.status(404).json({ error: "Place not found" });
+				}
+				userDoc.set({
+					favorites,
+					...userDoc,
+				});
+				await userDoc.save();
+				res.json("ok");
+			} catch (err) {
+				res.status(500).json({ error: err.message });
 			}
 		} else {
 			res.status(404).json("not found");

@@ -10,9 +10,7 @@ export default function RegisterPage() {
 	} = useForm();
 	async function registerUser(data) {
 		try {
-			await axios.post("/register", {
-				data,
-			});
+			await axios.post("/register", data);
 			alert("Registration successful. Now you can log in");
 		} catch (e) {
 			alert("Registration failed. Please try again later");

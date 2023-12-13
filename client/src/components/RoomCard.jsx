@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Modal from "../components/UI/Modal.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "../utils/axios.js";
+import Favorite from "./UI/Favorite.jsx";
 
 export default function RoomCard({ places, url, title }) {
 	const [localPlaces, setLocalPlaces] = useState(places);
@@ -27,7 +28,7 @@ export default function RoomCard({ places, url, title }) {
 
 	const handleDelete = (placeId) => {
 		axios
-			.delete(`/api/places/${placeId}`)
+			.delete(`/places/${placeId}`)
 			.then(() => {
 				const updatedPlaces = localPlaces.filter(
 					(place) => place._id !== placeId
@@ -48,7 +49,7 @@ export default function RoomCard({ places, url, title }) {
 		<>
 			{localPlaces.length > 0 &&
 				localPlaces.map((place) => (
-					<div key={place._id}>
+					<div key={place._id} className="relative">
 						<Link
 							to={title === "index" ? url + place._id : "#"}
 							onClick={() => handleOpenModal(place._id)}
@@ -80,6 +81,11 @@ export default function RoomCard({ places, url, title }) {
 									handleEdit(place._id);
 								}}
 							/>
+						)}
+						{title === "index" && (
+							<div className="absolute text-2xl cursor-pointer right-4 top-4 ">
+								<Favorite name={place.landlord}></Favorite>
+							</div>
 						)}
 					</div>
 				))}
