@@ -8,6 +8,7 @@ import PlacesFormPage from "../pages/PlacesForm.jsx";
 import PlacePage from "../pages/PlacePage.jsx";
 import BookingsPage from "../pages/BookingsPage.jsx";
 import BookingPage from "../pages/BookingPage.jsx";
+import Wishlists from "../pages/Wishlists.jsx";
 import Layout from "../components/Layout.jsx";
 
 export const routes = (
@@ -20,6 +21,7 @@ export const routes = (
 		<Route path="/account/places/new" element={<PlacesFormPage />} />
 		<Route path="/account/places/:id" element={<PlacesFormPage />} />
 		<Route path="/place/:id" element={<PlacePage />} />
+		<Route path="/account/wishlists" element={<Wishlists />} />
 		<Route path="/account/bookings" element={<BookingsPage />} />
 		<Route path="/account/bookings/:id" element={<BookingPage />} />
 	</Route>

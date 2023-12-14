@@ -5,6 +5,7 @@ import Autoprefixer from "autoprefixer";
 
 export default defineConfig({
 	plugins: [react()],
+	base: "/airbnb-clone/",
 	css: {
 		postcss: {
 			plugins: [TailwindCSS, Autoprefixer],

@@ -24,7 +24,7 @@ export default function BookingsPage() {
 			});
 	};
 	return (
-		<div className="grid grid-cols-2 mt-4">
+		<div className="grid grid-cols-2 gap-8 mt-4">
 			{bookings?.length > 0 &&
 				bookings.map((booking) => (
 					<div key={booking._id} className="relative ">

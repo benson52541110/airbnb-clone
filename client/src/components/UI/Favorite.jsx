@@ -32,11 +32,11 @@ const Favorite = ({ id }) => {
 				dispatch(setUser(res.data));
 				if (newSelected) {
 					dispatch(
-						showNotification({ type: "success", message: "已加入我的最愛" })
+						showNotification({ type: "success", message: "已加入願望清單" })
 					);
 				} else {
 					dispatch(
-						showNotification({ type: "success", message: "已從我的最愛移除" })
+						showNotification({ type: "success", message: "已從願望清單移除" })
 					);
 				}
 			});
