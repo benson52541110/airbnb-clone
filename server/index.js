@@ -475,6 +475,6 @@ app.delete("/api/bookings/:bookingId", async (req, res) => {
 	}
 });
 
-app.listen({ port: process.env.PORT || 5173 }, () => {
+app.listen({ port: process.env.PORT || 4000 }, () => {
 	console.log("Server started");
 });
