@@ -76,12 +76,6 @@ export default function Header() {
 							>
 								加入你的房源
 							</Link>
-							<Link
-								to={"/account/profile"}
-								className="block px-4 py-3 cursor-pointer hover:bg-gray-100"
-							>
-								帳號資訊
-							</Link>
 							<div
 								className="px-4 py-3 cursor-pointer hover:bg-gray-100"
 								onClick={logout}
