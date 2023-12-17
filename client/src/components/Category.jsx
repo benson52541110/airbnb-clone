@@ -38,7 +38,7 @@ const Category = ({ initialCategory, onCategorySelect }) => {
 				{roomCategoryList.map((slide, index) => (
 					<SwiperSlide key={index}>
 						<div
-							className="flex flex-col items-center justify-center h-full gap-1 text-center cursor-pointer "
+							className="flex flex-col items-center justify-center h-full gap-1 text-center cursor-pointer"
 							onClick={() => handleSelect(index)}
 						>
 							<Icon icon={`mdi:${slide.icon}`} />

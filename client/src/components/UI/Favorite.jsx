@@ -7,10 +7,11 @@ import axios from "../../utils/axios.js";
 
 const Favorite = ({ id }) => {
 	const { user } = useSelector((state) => state.user);
+	const notification = useSelector((state) => state.notification);
 	const dispatch = useDispatch();
+
 	const isFavorite = user && user.favorites.includes(id);
 	const [selected, setSelected] = useState(isFavorite);
-	const notification = useSelector((state) => state.notification);
 
 	const toggleFill = () => {
 		if (!user) {
@@ -23,6 +24,7 @@ const Favorite = ({ id }) => {
 		let updatedFavorites = newSelected
 			? [...user.favorites, id]
 			: user.favorites.filter((fav) => fav !== id);
+
 		axios
 			.put("/favorites", {
 				...user,
@@ -30,15 +32,12 @@ const Favorite = ({ id }) => {
 			})
 			.then((res) => {
 				dispatch(setUser(res.data));
-				if (newSelected) {
-					dispatch(
-						showNotification({ type: "success", message: "已加入願望清單" })
-					);
-				} else {
-					dispatch(
-						showNotification({ type: "success", message: "已從願望清單移除" })
-					);
-				}
+				dispatch(
+					showNotification({
+						type: newSelected ? "success" : "success",
+						message: newSelected ? "已加入願望清單" : "已從願望清單移除",
+					})
+				);
 			});
 	};
 

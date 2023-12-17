@@ -64,15 +64,20 @@ export default function PlacePage() {
 							{place.bedroom}間衛浴
 						</p>
 					</div>
-					<div className="py-8 border-b-2">
+					<div className="pb-8 border-b-2">
 						<p>{place.description}</p>
 					</div>
-					<div className="grid grid-cols-2 gap-4 py-8 border-b-2">
-						{perkItems}
+					<div>
+						<h2 className="mb-2 text-2xl font-semibold ">福利設施</h2>
+						<div className="grid grid-cols-2 gap-4 pb-8 border-b-2">
+							{perkItems}
+						</div>
 					</div>
 					<div>
 						<h2 className="mb-2 text-2xl font-semibold">住宿地點</h2>
-						{renderRoomType()}
+						<div className="grid grid-cols-2 gap-4 pb-8 border-b-2">
+							{renderRoomType()}
+						</div>
 					</div>
 				</div>
 				<div>

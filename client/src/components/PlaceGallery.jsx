@@ -29,7 +29,7 @@ export default function PlaceGallery({ place }) {
 							<Icon icon="iconoir:cancel" />
 						</button>
 					</div>
-					<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+					<div className="grid grid-cols-1 gap-2 md:grid-cols-2">
 						{place?.photos?.map((photo, index) => {
 							const colSpan =
 								index % 3 === 0 ? "md:col-span-2" : "md:col-span-1";
@@ -38,7 +38,7 @@ export default function PlaceGallery({ place }) {
 									<img
 										src={photo}
 										alt={`Place image ${index + 1}`}
-										className="object-cover w-full h-48"
+										className="object-cover w-full max-h-72"
 									/>
 								</div>
 							);

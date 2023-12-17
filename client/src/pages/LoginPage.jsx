@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "../utils/axios.js";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser, fetchUserProfile } from "../state/slices/userSlice.js";
+import { setUser } from "../state/slices/userSlice.js";
 import { showNotification } from "../state/slices/notificationSlice";
 import Notification from "../components/Notification.jsx";
 
