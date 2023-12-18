@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import axios from "../utils/axios";
 import { Navigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import PhotosUploader from "../components/PhotosUploader";
 import ListSelection from "../components/ListSelection";
+import axios from "../utils/axios";
 
 export default function PlacesFormPage() {
 	const { id } = useParams();

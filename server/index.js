@@ -17,7 +17,7 @@ require("dotenv").config();
 const app = express();
 
 const bcryptSalt = bcrypt.genSaltSync(10);
-const jwtSecret = "alsdkasdkopqwnelqnwleknqwe";
+const jwtSecret = process.env.JWT_SECRET;
 const bucket = "2023-airbnb-image";
 
 app.use(express.json());

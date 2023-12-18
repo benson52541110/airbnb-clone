@@ -1,10 +1,11 @@
-import axios from "../utils/axios";
 import { useState } from "react";
-import Image from "./Image";
 import { Icon } from "@iconify/react";
+import Image from "./Image";
+import axios from "../utils/axios";
 
 export default function PhotosUploader({ photos, onChange }) {
 	const [photoLink, setPhotoLink] = useState("");
+
 	async function addPhotoByLink(ev) {
 		ev.preventDefault();
 		const { data: filename } = await axios.post("/upload-by-link", {
@@ -15,6 +16,7 @@ export default function PhotosUploader({ photos, onChange }) {
 		});
 		setPhotoLink("");
 	}
+
 	function uploadPhoto(ev) {
 		const files = ev.target.files;
 		const data = new FormData();
@@ -30,14 +32,17 @@ export default function PhotosUploader({ photos, onChange }) {
 				onChange([...filenames]);
 			});
 	}
+
 	function removePhoto(ev, filename) {
 		ev.preventDefault();
 		onChange([...photos.filter((photo) => photo !== filename)]);
 	}
+
 	function selectAsMainPhoto(ev, filename) {
 		ev.preventDefault();
 		onChange([filename, ...photos.filter((photo) => photo !== filename)]);
 	}
+
 	return (
 		<>
 			<div className="flex gap-2">

@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
-import axios from "../utils/axios";
 import { Icon } from "@iconify/react";
-import Image from "../components/Image";
 import { Link } from "react-router-dom";
+import Image from "../components/Image";
 import BookingDates from "../components/BookingDates";
+import axios from "../utils/axios";
 
 export default function BookingsPage() {
 	const [bookings, setBookings] = useState([]);
+
 	useEffect(() => {
 		axios.get("/bookings").then((response) => {
 			setBookings(response.data);
 		});
 	}, []);
+
 	const deleteBooking = (event, bookingId) => {
 		event.stopPropagation();
 		axios
@@ -23,6 +25,7 @@ export default function BookingsPage() {
 				console.error("刪除預訂時出錯：", err);
 			});
 	};
+
 	return (
 		<div className="grid grid-cols-2 gap-8 mt-4">
 			{bookings?.length > 0 &&

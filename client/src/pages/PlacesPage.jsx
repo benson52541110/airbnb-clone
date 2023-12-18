@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "../utils/axios";
 import { Icon } from "@iconify/react";
 import RoomCard from "../components/RoomCard";
+import axios from "../utils/axios";
+
 export default function PlacesPage() {
 	const [places, setPlaces] = useState([]);
 	useEffect(() => {

@@ -18,6 +18,7 @@ export default function ListSelection({
 		roomType: roomTypeList,
 		roomCategory: roomCategoryList,
 	};
+
 	function handleCbClick(ev) {
 		const { checked, name } = ev.target;
 		if (isMultiSelect) {

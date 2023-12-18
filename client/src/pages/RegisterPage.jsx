@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../utils/axios";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { showNotification } from "../state/slices/notificationSlice";
 import Notification from "../components/Notification";
+import { showNotification } from "../state/slices/notificationSlice";
+import axios from "../utils/axios";
 
 export default function RegisterPage() {
 	const navigate = useNavigate();

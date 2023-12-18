@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Icon } from "@iconify/react";
-import axios from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../state/slices/userSlice.js";
+import { Icon } from "@iconify/react";
+import axios from "../utils/axios";
 
 export default function Header() {
 	const { user } = useSelector((state) => state.user);
@@ -16,6 +16,7 @@ export default function Header() {
 			setIsModalOpen(false);
 		}
 	};
+
 	async function logout() {
 		await axios.post("/logout");
 		dispatch(setUser(null));
