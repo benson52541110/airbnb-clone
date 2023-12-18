@@ -59,7 +59,7 @@ export default function PhotosUploader({ photos, onChange }) {
 					添加鏈結
 				</button>
 			</div>
-			<div className="grid grid-cols-3 gap-2 mt-2 md:grid-cols-4 lg:grid-cols-6">
+			<div className="grid grid-cols-1 gap-2 mt-2 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3">
 				{photos?.length > 0 &&
 					photos.map((link) => (
 						<div className="relative flex h-32" key={link}>

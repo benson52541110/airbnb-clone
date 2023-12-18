@@ -50,12 +50,12 @@ export default function PlacePage() {
 		);
 	};
 	return (
-		<div className="px-8 pt-8 mx-8 mt-4">
+		<div className="grid-cols-2 px-4 pt-8 mx-8 mt-4 md:px-8">
 			<h1 className="text-3xl">{place.title}</h1>
 			<AddressLink>{place.address}</AddressLink>
 			<PlaceGallery place={place} />
-			<div className="mt-8 mb-8 grid gap-8 grid-cols-1 md:grid-cols-[2fr_1fr]">
-				<div className="flex flex-col gap-8 px-2">
+			<div className="mt-8 mb-8 grid gap-8 grid-cols-21 md:grid-cols-[2fr_1fr]">
+				<div className="flex flex-col col-span-2 gap-8 px-2 lg:col-span-1">
 					<div className="flex flex-col gap-2 py-8 border-b-2">
 						<h2 className="text-2xl font-semibold">
 							{place.landlord}出租的 {place.roomType}
@@ -70,18 +70,18 @@ export default function PlacePage() {
 					</div>
 					<div>
 						<h2 className="mb-2 text-2xl font-semibold ">福利設施</h2>
-						<div className="grid grid-cols-2 gap-4 pb-8 border-b-2">
+						<div className="grid grid-cols-1 gap-4 pb-8 border-b-2 sm:grid-cols-2">
 							{perkItems}
 						</div>
 					</div>
 					<div>
 						<h2 className="mb-2 text-2xl font-semibold">住宿地點</h2>
-						<div className="grid grid-cols-2 gap-4 pb-8 border-b-2">
+						<div className="grid grid-cols-1 gap-4 pb-8 border-b-2 sm:grid-cols-2">
 							{renderRoomType()}
 						</div>
 					</div>
 				</div>
-				<div>
+				<div className="col-span-2 lg:col-span-1">
 					<BookingWidget place={place} />
 				</div>
 			</div>

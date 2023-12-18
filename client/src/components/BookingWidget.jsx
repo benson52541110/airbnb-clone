@@ -53,8 +53,8 @@ export default function BookingWidget({ place }) {
 		<div className="p-4 bg-white shadow rounded-2xl">
 			<div className="text-2xl text-center">${place.price} / 晚</div>
 			<div className="mt-4 border rounded-2xl">
-				<div className="flex">
-					<div className="px-4 py-3">
+				<div className="flex flex-col items-center md:flex-row">
+					<div className="flex-1 px-4 py-3">
 						<label>入住:</label>
 						<input
 							type="date"
@@ -62,7 +62,7 @@ export default function BookingWidget({ place }) {
 							onChange={(ev) => setCheckIn(ev.target.value)}
 						/>
 					</div>
-					<div className="px-4 py-3 border-l">
+					<div className="flex-1 px-4 py-3 md:border-l">
 						<label>退房:</label>
 						<input
 							type="date"

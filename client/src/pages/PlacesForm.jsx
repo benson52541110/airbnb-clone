@@ -73,7 +73,7 @@ export default function PlacesFormPage() {
 				onSubmit={handleSubmit(onSubmit)}
 				className="grid grid-cols-2 gap-12"
 			>
-				<div>
+				<div className="col-span-2 md:col-span-1">
 					<h2 className="mt-4 text-2xl">房屋名稱</h2>
 					<p className="text-sm text-gray-500">
 						為您的房屋取個名字，例如：我的小窩
@@ -95,7 +95,7 @@ export default function PlacesFormPage() {
 						<span className="text-red-500 ">{errors.title.message}</span>
 					)}
 				</div>
-				<div>
+				<div className="col-span-2 md:col-span-1">
 					<h2 className="mt-4 text-2xl">價格</h2>
 					<p className="text-sm text-gray-500">房間價格</p>
 					<Controller
@@ -115,7 +115,7 @@ export default function PlacesFormPage() {
 						<span className="text-red-500 ">{errors.price.message}</span>
 					)}
 				</div>
-				<div>
+				<div className="col-span-2 md:col-span-1">
 					<h2 className="mt-4 text-2xl">地址</h2>
 					<p className="text-sm text-gray-500">房屋地址</p>
 					<Controller
@@ -135,7 +135,7 @@ export default function PlacesFormPage() {
 						<span className="text-red-500 ">{errors.address.message}</span>
 					)}
 				</div>
-				<div>
+				<div className="col-span-2 md:col-span-1">
 					<h2 className="mt-4 text-2xl">房屋介紹</h2>
 					<p className="text-sm text-gray-500">詳細介紹您的房屋</p>
 					<Controller
@@ -187,7 +187,7 @@ export default function PlacesFormPage() {
 						</span>
 					)}
 				</div>
-				<div className="grid grid-cols-2 col-span-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
+				<div className="grid grid-cols-1 col-span-2 gap-2 md:grid-cols-3 lg:grid-cols-6 sm:grid-cols-2">
 					<Controller
 						name="listSelection"
 						control={control}
@@ -210,7 +210,7 @@ export default function PlacesFormPage() {
 						<span className="text-red-500 ">{errors.roomType.message}</span>
 					)}
 				</div>
-				<div className="grid grid-cols-2 col-span-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
+				<div className="grid grid-cols-1 col-span-2 gap-2 md:grid-cols-3 lg:grid-cols-6 sm:grid-cols-2">
 					<Controller
 						name="roomType"
 						control={control}
@@ -233,7 +233,7 @@ export default function PlacesFormPage() {
 						<span className="text-red-500 ">{errors.roomRange.message}</span>
 					)}
 
-					<div className="grid grid-cols-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
+					<div className="grid grid-cols-1 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6 sm:grid-cols-2">
 						<Controller
 							name="roomRange"
 							control={control}
@@ -257,7 +257,7 @@ export default function PlacesFormPage() {
 						<span className="text-red-500 ">{errors.roomCategory.message}</span>
 					)}
 
-					<div className="grid grid-cols-2 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6">
+					<div className="grid grid-cols-1 gap-2 mt-2 md:grid-cols-3 lg:grid-cols-6 sm:grid-cols-2">
 						<Controller
 							name="roomCategory"
 							control={control}
@@ -275,7 +275,7 @@ export default function PlacesFormPage() {
 						/>
 					</div>
 				</div>
-				<div>
+				<div className="col-span-2">
 					<h2 className="mt-4 text-2xl">房間設定</h2>
 					<p className="text-sm text-gray-500">添加入住人數以及床鋪數量</p>
 					<div className="grid grid-cols-1 gap-2 md:grid-cols-2 ">
@@ -321,7 +321,7 @@ export default function PlacesFormPage() {
 						</div>
 					</div>
 				</div>
-				<div>
+				<div className="col-span-2">
 					<h2 className="mt-4 text-2xl">更多資訊</h2>
 					<p className="text-sm text-gray-500">房屋規則與介紹</p>
 					<Controller
@@ -330,8 +330,9 @@ export default function PlacesFormPage() {
 						render={({ field }) => <textarea {...field} />}
 					/>
 				</div>
-
-				<button className="my-4 primary">儲存</button>
+				<div>
+					<button className="w-1/2 col-span-2 my-4 primary">儲存</button>
+				</div>
 			</form>
 		</div>
 	);

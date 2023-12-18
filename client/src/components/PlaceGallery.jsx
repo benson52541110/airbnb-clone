@@ -51,7 +51,7 @@ export default function PlaceGallery({ place }) {
 
 	return (
 		<div className="relative">
-			<div className="grid gap-2 grid-cols-[2fr_1fr_1fr] rounded-3xl overflow-hidden">
+			<div className="grid gap-2 grid-cols-1 sm:grid-cols-[2fr_1fr_1fr] rounded-3xl overflow-hidden">
 				<div>
 					<Photo photo={place.photos?.[0]} />
 				</div>
