@@ -1,15 +1,16 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "../utils/axios";
 import BookingWidget from "../components/BookingWidget";
 import PlaceGallery from "../components/PlaceGallery";
 import AddressLink from "../components/AddressLink";
-import { servicesList, roomTypeList } from "../data/PlaceFormData";
 import PerkItem from "../components/UI/PerkItem";
+import { servicesList, roomTypeList } from "../data/PlaceFormData";
+import axios from "../utils/axios";
 
 export default function PlacePage() {
 	const { id } = useParams();
 	const [place, setPlace] = useState(null);
+
 	useEffect(() => {
 		if (!id) {
 			return;
