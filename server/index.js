@@ -26,7 +26,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(
 	cors({
 		credentials: true,
-		origin: "https://cloneairbnb.jp.ngrok.io",
+		origin: ["https://cloneairbnb.ngrok.io", "http://localhost:5173"],
 	})
 );
 
@@ -113,7 +113,9 @@ app.post("/api/login", async (req, res) => {
 						if (err) {
 							res.status(500).json({ error: "Error generating token" });
 						} else {
-							res.cookie("token", token).json(userDoc);
+							res
+								.cookie("token", token, { sameSite: "None", secure: true })
+								.json(userDoc);
 						}
 					}
 				);
@@ -212,7 +214,6 @@ app.post(
 
 app.get("/api/user-places", async (req, res) => {
 	const { token } = req.cookies;
-
 	if (!token) {
 		return res.status(401).json({ error: "JWT must be provided" });
 	}
