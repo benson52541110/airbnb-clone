@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../state/slices/userSlice.js";
 import { showNotification } from "../state/slices/notificationSlice";
 import Notification from "../components/Notification.jsx";
-import axios from "../utils/axios.js";
+import axios from "../utils/axios.ts";
 
 export default function LoginPage() {
 	const {

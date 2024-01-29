@@ -4,7 +4,28 @@ import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "../utils/axios";
 
-export default function BookingWidget({ place }) {
+interface BookingWidgetProps {
+	place: {
+		address: string;
+		photos: string[];
+		description: string;
+		listSelection: string[];
+		extraInfo: string;
+		checkIn: number;
+		checkOut: number;
+		maxGuests: number;
+		price: number;
+		roomType: string;
+		roomRange: string;
+		roomCategory: string;
+		bed: number;
+		room: number;
+		bedroom: number;
+		landlord: string;
+	};
+}
+
+export default function BookingWidget({ place }: BookingWidgetProps) {
 	const [checkIn, setCheckIn] = useState("");
 	const [checkOut, setCheckOut] = useState("");
 	const [numberOfGuests, setNumberOfGuests] = useState(1);

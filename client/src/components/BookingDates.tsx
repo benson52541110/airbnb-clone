@@ -1,7 +1,15 @@
 import { format } from "date-fns";
 import { Icon } from "@iconify/react";
 
-export default function BookingDates({ booking, className }) {
+interface BookingDatesProps {
+	booking: {
+		checkIn: Date | string;
+		checkOut: Date | string;
+	};
+	className?: string;
+}
+
+const BookingDates: React.FC<BookingDatesProps> = ({ booking, className }) => {
 	return (
 		<div className={"flex flex-col gap-1 " + className}>
 			<div className="flex items-center gap-1">
@@ -15,4 +23,5 @@ export default function BookingDates({ booking, className }) {
 			</div>
 		</div>
 	);
-}
+};
+export default BookingDates;

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../state/slices/userSlice.js";
 import { showNotification } from "../../state/slices/notificationSlice";
 import Notification from "../Notification.jsx";
-import axios from "../../utils/axios.js";
+import axios from "../../utils/axios.ts";
 
 const Favorite = ({ id }) => {
 	const { user } = useSelector((state) => state.user);
