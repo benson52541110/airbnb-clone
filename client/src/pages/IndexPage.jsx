@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Category from "../components/Category.jsx";
 import RoomCard from "../components/RoomCard.jsx";
 import Loading from "../components/Loading.jsx";
-import axios from "../utils/axios.ts";
+import axios from "../utils/axios";
 
 export default function IndexPage() {
 	const [places, setPlaces] = useState([]);

@@ -96,8 +96,9 @@ export default function BookingWidget({ place }: BookingWidgetProps) {
 					<label>入住人數:</label>
 					<input
 						type="number"
+						min="1"
 						value={numberOfGuests}
-						onChange={(ev) => setNumberOfGuests(ev.target.value)}
+						onChange={(ev) => setNumberOfGuests(parseInt(ev.target.value))}
 					/>
 				</div>
 				{numberOfNights > 0 && (

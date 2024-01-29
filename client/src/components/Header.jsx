@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../state/slices/userSlice.js";
+import { setUser } from "../state/slices/userSlice.ts";
 import { Icon } from "@iconify/react";
 import axios from "../utils/axios";
 

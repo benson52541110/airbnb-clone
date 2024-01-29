@@ -1,5 +1,17 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
+
+interface User {
+	id: string;
+	name: string;
+	email: string;
+}
+
+interface UserState {
+	user: User | null;
+	ready: boolean;
+	error: string | null | undefined;
+}
 
 export const fetchUserProfile = createAsyncThunk(
 	"user/fetchUserProfile",

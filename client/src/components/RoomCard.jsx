@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Modal from "../components/UI/Modal.jsx";
 import Image from "../components/Image.jsx";
 import Favorite from "./UI/Favorite.jsx";
-import axios from "../utils/axios.ts";
+import axios from "../utils/axios";
 
 export default function RoomCard({ places, url, title }) {
 	const [localPlaces, setLocalPlaces] = useState(places);
