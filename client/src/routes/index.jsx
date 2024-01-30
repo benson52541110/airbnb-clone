@@ -8,7 +8,7 @@ import PlacePage from "../pages/PlacePage.jsx";
 import BookingsPage from "../pages/BookingsPage.jsx";
 import BookingPage from "../pages/BookingPage.jsx";
 import Wishlists from "../pages/Wishlists.jsx";
-import Layout from "../components/Layout.jsx";
+import Layout from "../components/Layout.tsx";
 import RequireAuth from "../components/RequireAuth.jsx";
 
 export const routes = (

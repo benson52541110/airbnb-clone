@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Category from "../components/Category.tsx";
-import RoomCard from "../components/RoomCard.jsx";
-import Loading from "../components/Loading.jsx";
+import RoomCard from "../components/RoomCard";
+import Loading from "../components/Loading.tsx";
 import axios from "../utils/axios";
 
 export default function IndexPage() {

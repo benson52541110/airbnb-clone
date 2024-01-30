@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
-import Image from "./Image.jsx";
+import Image from "./Image";
 
 export default function PlaceGallery({ place }) {
 	const [showAllPhotos, setShowAllPhotos] = useState(false);
