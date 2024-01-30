@@ -9,7 +9,7 @@ import BookingsPage from "../pages/BookingsPage.jsx";
 import BookingPage from "../pages/BookingPage.jsx";
 import Wishlists from "../pages/Wishlists.jsx";
 import Layout from "../components/Layout.tsx";
-import RequireAuth from "../components/RequireAuth.jsx";
+import RequireAuth from "../components/RequireAuth.tsx";
 
 export const routes = (
 	<Route path="/" element={<Layout />}>

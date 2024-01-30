@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import Modal from "../components/UI/Modal.jsx";
-import Image from "../components/Image.tsx";
+import Image from "../components/Image";
 import Favorite from "./UI/Favorite.jsx";
 import axios from "../utils/axios";
 

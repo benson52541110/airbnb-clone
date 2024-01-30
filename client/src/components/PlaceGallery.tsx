@@ -2,10 +2,18 @@ import { useState } from "react";
 import { Icon } from "@iconify/react";
 import Image from "./Image";
 
-export default function PlaceGallery({ place }) {
+interface Place {
+	photos?: string[];
+}
+
+interface PhotoProps {
+	photo?: string;
+}
+
+const PlaceGallery: React.FC<{ place: Place }> = ({ place }) => {
 	const [showAllPhotos, setShowAllPhotos] = useState(false);
 
-	const Photo = ({ photo }) => {
+	const Photo: React.FC<PhotoProps> = ({ photo }) => {
 		const handleClick = () => setShowAllPhotos(true);
 		return photo ? (
 			<Image
@@ -77,4 +85,6 @@ export default function PlaceGallery({ place }) {
 			</button>
 		</div>
 	);
-}
+};
+
+export default PlaceGallery;

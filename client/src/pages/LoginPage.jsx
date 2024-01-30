@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../state/slices/userSlice.ts";
 import { showNotification } from "../state/slices/notificationSlice";
-import Notification from "../components/Notification.jsx";
+import Notification from "../components/Notification.tsx";
 import axios from "../utils/axios";
 
 export default function LoginPage() {
