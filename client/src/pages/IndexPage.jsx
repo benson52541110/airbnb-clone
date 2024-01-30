@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Category from "../components/Category.jsx";
+import Category from "../components/Category.tsx";
 import RoomCard from "../components/RoomCard.jsx";
 import Loading from "../components/Loading.jsx";
 import axios from "../utils/axios";
@@ -27,7 +27,6 @@ export default function IndexPage() {
 			) : (
 				<>
 					<Category
-						initialCategory="greenhouse"
 						onCategorySelect={(category) => setSelectedCategory(category)}
 					></Category>
 					<div className="grid grid-cols-1 mt-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-x-6 gap-y-8">

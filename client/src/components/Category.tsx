@@ -3,18 +3,19 @@ import { Icon } from "@iconify/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { roomCategoryList } from "../data/PlaceFormData";
+import { v4 as uuidv4 } from "uuid";
 import "swiper/swiper-bundle.css";
 import "./Category.css";
 
-const Category = ({ initialCategory, onCategorySelect }) => {
-	const initialIndex = roomCategoryList.findIndex(
-		(slide) => slide.name === initialCategory
-	);
-	const [selectedSlide, setSelectedSlide] = useState(initialIndex);
+interface CategoryProps {
+	onCategorySelect: (name: string) => void;
+}
 
-	const handleSelect = (index) => {
-		setSelectedSlide(index);
-		onCategorySelect(roomCategoryList[index].name);
+const Category: React.FC<CategoryProps> = ({ onCategorySelect }) => {
+	const [selectedSlide, setSelectedSlide] = useState<string>("greenhouse");
+	const handleSelect = (name: string) => {
+		setSelectedSlide(name);
+		onCategorySelect(name);
 	};
 
 	return (
@@ -35,16 +36,16 @@ const Category = ({ initialCategory, onCategorySelect }) => {
 					},
 				}}
 			>
-				{roomCategoryList.map((slide, index) => (
-					<SwiperSlide key={index}>
+				{roomCategoryList.map((slide, index: number) => (
+					<SwiperSlide key={slide.id}>
 						<div
 							className="flex flex-col items-center justify-center h-full gap-1 text-center cursor-pointer"
-							onClick={() => handleSelect(index)}
+							onClick={() => handleSelect(slide.name)}
 						>
 							<Icon icon={`mdi:${slide.icon}`} />
 							<div
 								className={`text ${
-									selectedSlide === index
+									selectedSlide === slide.name
 										? "border-b-2 text-black border-black"
 										: "text-gray-600"
 								}`}

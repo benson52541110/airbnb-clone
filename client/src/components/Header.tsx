@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../state/slices/userSlice.ts";
+import { setUser } from "../state/slices/userSlice.js";
 import { Icon } from "@iconify/react";
-import axios from "../utils/axios";
+import axios from "../utils/axios.js";
 
 export default function Header() {
 	const { user } = useSelector((state) => state.user);
@@ -11,7 +11,7 @@ export default function Header() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 
-	const handleCloseModal = (e) => {
+	const handleCloseModal = () => {
 		if (isModalOpen) {
 			setIsModalOpen(false);
 		}

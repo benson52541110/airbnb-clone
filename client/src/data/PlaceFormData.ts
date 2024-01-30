@@ -1,28 +1,37 @@
-export const servicesList = [
+import { v4 as uuidv4 } from "uuid";
+
+interface ListItem {
+	name: string;
+	icon: string;
+	text: string;
+	id: string;
+}
+
+export const servicesList: ListItem[] = [
 	{ name: "wifi", icon: "wifi", text: "Wifi" },
 	{ name: "parking", icon: "parking", text: "免費停車場" },
 	{ name: "tv", icon: "tv", text: "電視" },
 	{ name: "audio", icon: "audio", text: "音響" },
 	{ name: "pets", icon: "pets", text: "寵物" },
 	{ name: "entrance", icon: "door", text: "私人入口" },
-];
+].map((item) => ({ ...item, id: uuidv4() }));
 
-export const roomTypeList = [
+export const roomTypeList: ListItem[] = [
 	{ name: "home", icon: "home", text: "獨棟房屋" },
 	{ name: "domain", icon: "domain", text: "公寓" },
 	{ name: "bus", icon: "bus-double-decker", text: "露營車" },
 	{ name: "terrain", icon: "terrain", text: "洞穴" },
 	{ name: "forest", icon: "forest", text: "小木屋" },
 	{ name: "castle", icon: "castle", text: "城堡" },
-];
+].map((item) => ({ ...item, id: uuidv4() }));
 
-export const roomRangeList = [
+export const roomRangeList: ListItem[] = [
 	{ name: "home", icon: "home", text: "整套房源" },
 	{ name: "domain", icon: "domain", text: "一個房間" },
 	{ name: "bus", icon: "home-account", text: "含住房間" },
-];
+].map((item) => ({ ...item, id: uuidv4() }));
 
-export const roomCategoryList = [
+export const roomCategoryList: ListItem[] = [
 	{ name: "greenhouse", icon: "greenhouse", text: "民宿" },
 	{ name: "house", icon: "house", text: "客房" },
 	{ name: "island", icon: "island", text: "景觀" },
@@ -42,4 +51,4 @@ export const roomCategoryList = [
 	{ name: "park", icon: "park", text: "公園" },
 	{ name: "fire", icon: "fire", text: "篝火" },
 	{ name: "lake", icon: "lake", text: "湖泊" },
-];
+].map((item) => ({ ...item, id: uuidv4() }));
