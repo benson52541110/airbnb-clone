@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import Category from "../components/Category.tsx";
+import Category from "../components/Category";
 import RoomCard from "../components/RoomCard";
-import Loading from "../components/Loading.tsx";
+import Loading from "../components/Loading";
 import axios from "../utils/axios";
+import { Place } from "../types/place";
 
-export default function IndexPage() {
-	const [places, setPlaces] = useState([]);
+const IndexPage: React.FC = () => {
+	const [places, setPlaces] = useState<Place[]>([]);
 	const [selectedCategory, setSelectedCategory] = useState("greenhouse");
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -40,4 +41,6 @@ export default function IndexPage() {
 			)}
 		</>
 	);
-}
+};
+
+export default IndexPage;

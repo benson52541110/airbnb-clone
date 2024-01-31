@@ -3,16 +3,20 @@ import { useEffect, useState } from "react";
 import AddressLink from "../components/AddressLink";
 import PlaceGallery from "../components/PlaceGallery";
 import BookingDates from "../components/BookingDates";
+import { Booking } from "../types/booking";
 import axios from "../utils/axios";
 
-export default function BookingPage() {
-	const { id } = useParams();
-	const [booking, setBooking] = useState(null);
+const BookingPage: React.FC = () => {
+	const { id } = useParams<{ id: string }>();
+	const [booking, setBooking] = useState<Booking | null>(null);
 
 	useEffect(() => {
 		if (id) {
 			axios.get("/bookings").then((response) => {
-				const foundBooking = response.data.find(({ _id }) => _id === id);
+				console.log(response.data);
+				const foundBooking = response.data.find(
+					(booking: Booking) => booking._id === id
+				);
 				if (foundBooking) {
 					setBooking(foundBooking);
 				}
@@ -41,4 +45,6 @@ export default function BookingPage() {
 			<PlaceGallery place={booking.place} />
 		</div>
 	);
-}
+};
+
+export default BookingPage;

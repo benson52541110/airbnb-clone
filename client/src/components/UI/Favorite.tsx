@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../state/slices/userSlice.ts";
+import { setUser } from "../../state/slices/userSlice";
 import { showNotification } from "../../state/slices/notificationSlice";
-import Notification from "../Notification.tsx";
+import Notification from "../Notification";
 import axios from "../../utils/axios";
 
-const Favorite = ({ id }) => {
+interface FavoriteProps {
+	id: string;
+}
+
+const Favorite: React.FC<FavoriteProps> = ({ id }) => {
 	const { user } = useSelector((state) => state.user);
 	const notification = useSelector((state) => state.notification);
 	const dispatch = useDispatch();
@@ -23,7 +27,7 @@ const Favorite = ({ id }) => {
 		setSelected(newSelected);
 		let updatedFavorites = newSelected
 			? [...user.favorites, id]
-			: user.favorites.filter((fav) => fav !== id);
+			: user.favorites.filter((fav: string) => fav !== id);
 
 		axios
 			.put("/favorites", {

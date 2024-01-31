@@ -6,10 +6,10 @@ import PlacesPage from "../pages/PlacesPage.jsx";
 import PlacesFormPage from "../pages/PlacesForm.jsx";
 import PlacePage from "../pages/PlacePage.jsx";
 import BookingsPage from "../pages/BookingsPage.jsx";
-import BookingPage from "../pages/BookingPage.jsx";
+import BookingPage from "../pages/BookingPage";
 import Wishlists from "../pages/Wishlists.jsx";
-import Layout from "../components/Layout.tsx";
-import RequireAuth from "../components/RequireAuth.tsx";
+import Layout from "../components/Layout";
+import RequireAuth from "../components/RequireAuth";
 
 export const routes = (
 	<Route path="/" element={<Layout />}>

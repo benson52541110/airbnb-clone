@@ -1,5 +1,5 @@
 import { Routes } from "react-router-dom";
-import { routes } from "./routes/index.tsx";
+import { routes } from "./routes/index";
 
 function App() {
 	return <Routes>{routes}</Routes>;
