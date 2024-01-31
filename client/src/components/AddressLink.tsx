@@ -2,15 +2,14 @@ import { Icon } from "@iconify/react";
 
 interface AddressLinkProps {
 	children: string;
-	className?: string;
 }
 
 const AddressLink: React.FC<AddressLinkProps> = ({ children }) => {
 	return (
 		<a
-			className="flex items-center my-3"
+			className="inline-flex items-center my-3 hover:text-gray-600"
 			target="_blank"
-			href={`https://maps.google.com/?q=${children}`}
+			href={`https://maps.google.com/?q=${encodeURIComponent(children)}`}
 			rel="noreferrer"
 		>
 			<Icon icon="bxs:map" />

@@ -3,48 +3,42 @@ import { differenceInCalendarDays } from "date-fns";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "../utils/axios";
+import { Place } from "../types/place";
 
 interface BookingWidgetProps {
-	place: {
-		address: string;
-		photos: string[];
-		description: string;
-		listSelection: string[];
-		extraInfo: string;
-		checkIn: number;
-		checkOut: number;
-		maxGuests: number;
-		price: number;
-		roomType: string;
-		roomRange: string;
-		roomCategory: string;
-		bed: number;
-		room: number;
-		bedroom: number;
-		landlord: string;
-	};
+	place: Place;
 }
 
-export default function BookingWidget({ place }: BookingWidgetProps) {
-	const [checkIn, setCheckIn] = useState("");
-	const [checkOut, setCheckOut] = useState("");
-	const [numberOfGuests, setNumberOfGuests] = useState(1);
-	const [name, setName] = useState("");
-	const [phone, setPhone] = useState("");
+interface BookingWidgetState {
+	checkIn: string;
+	checkOut: string;
+	numberOfGuests: number;
+	name: string;
+	phone: string;
+}
+
+const BookingWidget: React.FC<BookingWidgetProps> = ({ place }) => {
+	const [booking, setBooking] = useState<BookingWidgetState>({
+		checkIn: "",
+		checkOut: "",
+		numberOfGuests: 1,
+		name: "",
+		phone: "",
+	});
 	const [redirect, setRedirect] = useState("");
 	const { user } = useSelector((state) => state.user);
 
 	useEffect(() => {
 		if (user) {
-			setName(user.name);
+			setBooking((prev) => ({ ...prev, name: user.name }));
 		}
 	}, [user]);
 
 	let numberOfNights = 0;
-	if (checkIn && checkOut) {
+	if (booking.checkIn && booking.checkOut) {
 		numberOfNights = differenceInCalendarDays(
-			new Date(checkOut),
-			new Date(checkIn)
+			new Date(booking.checkOut),
+			new Date(booking.checkIn)
 		);
 	}
 
@@ -54,11 +48,11 @@ export default function BookingWidget({ place }: BookingWidgetProps) {
 			return;
 		}
 		const response = await axios.post("/bookings", {
-			checkIn,
-			checkOut,
-			numberOfGuests,
-			name,
-			phone,
+			checkIn: booking.checkIn,
+			checkOut: booking.checkOut,
+			numberOfGuests: booking.numberOfGuests,
+			name: booking.name,
+			phone: booking.phone,
 			place: place._id,
 			price: numberOfNights * place.price,
 		});
@@ -79,16 +73,20 @@ export default function BookingWidget({ place }: BookingWidgetProps) {
 						<label>入住:</label>
 						<input
 							type="date"
-							value={checkIn}
-							onChange={(ev) => setCheckIn(ev.target.value)}
+							value={booking.checkIn}
+							onChange={(ev) =>
+								setBooking({ ...booking, checkIn: ev.target.value })
+							}
 						/>
 					</div>
 					<div className="flex-1 px-4 py-3 md:border-l">
 						<label>退房:</label>
 						<input
 							type="date"
-							value={checkOut}
-							onChange={(ev) => setCheckOut(ev.target.value)}
+							value={booking.checkOut}
+							onChange={(ev) =>
+								setBooking({ ...booking, checkOut: ev.target.value })
+							}
 						/>
 					</div>
 				</div>
@@ -97,8 +95,13 @@ export default function BookingWidget({ place }: BookingWidgetProps) {
 					<input
 						type="number"
 						min="1"
-						value={numberOfGuests}
-						onChange={(ev) => setNumberOfGuests(parseInt(ev.target.value))}
+						value={booking.numberOfGuests}
+						onChange={(ev) =>
+							setBooking({
+								...booking,
+								numberOfGuests: parseInt(ev.target.value),
+							})
+						}
 					/>
 				</div>
 				{numberOfNights > 0 && (
@@ -106,14 +109,18 @@ export default function BookingWidget({ place }: BookingWidgetProps) {
 						<label>您的名字:</label>
 						<input
 							type="text"
-							value={name}
-							onChange={(ev) => setName(ev.target.value)}
+							value={booking.name}
+							onChange={(ev) =>
+								setBooking({ ...booking, name: ev.target.value })
+							}
 						/>
 						<label>電話號碼:</label>
 						<input
 							type="tel"
-							value={phone}
-							onChange={(ev) => setPhone(ev.target.value)}
+							value={booking.phone}
+							onChange={(ev) =>
+								setBooking({ ...booking, phone: ev.target.value })
+							}
 						/>
 					</div>
 				)}
@@ -123,4 +130,6 @@ export default function BookingWidget({ place }: BookingWidgetProps) {
 			</button>
 		</div>
 	);
-}
+};
+
+export default BookingWidget;

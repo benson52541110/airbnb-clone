@@ -1,13 +1,13 @@
 import { Route } from "react-router-dom";
-import IndexPage from "../pages/IndexPage.jsx";
-import LoginPage from "../pages/LoginPage.jsx";
-import RegisterPage from "../pages/RegisterPage.jsx";
-import PlacesPage from "../pages/PlacesPage.jsx";
-import PlacesFormPage from "../pages/PlacesForm.jsx";
-import PlacePage from "../pages/PlacePage.jsx";
-import BookingsPage from "../pages/BookingsPage.jsx";
+import IndexPage from "../pages/IndexPage";
+import LoginPage from "../pages/LoginPage";
+import RegisterPage from "../pages/RegisterPage";
+import PlacesPage from "../pages/PlacesPage";
+import PlacesFormPage from "../pages/PlacesForm";
+import PlacePage from "../pages/PlacePage";
+import BookingsPage from "../pages/BookingsPage";
 import BookingPage from "../pages/BookingPage";
-import Wishlists from "../pages/Wishlists.jsx";
+import Wishlists from "../pages/Wishlists";
 import Layout from "../components/Layout";
 import RequireAuth from "../components/RequireAuth";
 
