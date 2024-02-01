@@ -1,30 +1,32 @@
 import { useEffect, useState } from "react";
-import { differenceInCalendarDays } from "date-fns";
+import {
+	format,
+	addDays,
+	parseISO,
+	isAfter,
+	differenceInCalendarDays,
+} from "date-fns";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import axios from "../utils/axios";
 import { Place } from "../types/place";
-
+import { Booking } from "../types/booking";
+import axios from "../utils/axios";
 interface BookingWidgetProps {
 	place: Place;
 }
 
-interface BookingWidgetState {
-	checkIn: string;
-	checkOut: string;
-	numberOfGuests: number;
-	name: string;
-	phone: string;
-}
-
 const BookingWidget: React.FC<BookingWidgetProps> = ({ place }) => {
-	const [booking, setBooking] = useState<BookingWidgetState>({
-		checkIn: "",
-		checkOut: "",
+	const [booking, setBooking] = useState<Booking>({
+		checkIn: new Date(),
+		checkOut: addDays(new Date(), 1),
 		numberOfGuests: 1,
 		name: "",
 		phone: "",
 	});
+	let numberOfNights = differenceInCalendarDays(
+		new Date(booking.checkOut),
+		new Date(booking.checkIn)
+	);
 	const [redirect, setRedirect] = useState("");
 	const { user } = useSelector((state) => state.user);
 
@@ -33,14 +35,6 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ place }) => {
 			setBooking((prev) => ({ ...prev, name: user.name }));
 		}
 	}, [user]);
-
-	let numberOfNights = 0;
-	if (booking.checkIn && booking.checkOut) {
-		numberOfNights = differenceInCalendarDays(
-			new Date(booking.checkOut),
-			new Date(booking.checkIn)
-		);
-	}
 
 	async function bookThisPlace() {
 		if (!user) {
@@ -54,7 +48,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ place }) => {
 			name: booking.name,
 			phone: booking.phone,
 			place: place._id,
-			price: numberOfNights * place.price,
+			totalPrice: numberOfNights * place.price * booking.numberOfGuests,
 		});
 		const bookingId = response.data._id;
 		setRedirect(`/account/bookings/${bookingId}`);
@@ -63,6 +57,8 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ place }) => {
 	if (redirect) {
 		return <Navigate to={redirect} />;
 	}
+
+	const currentDate = format(new Date(), "yyyy-MM-dd");
 
 	return (
 		<div className="p-4 bg-white shadow rounded-2xl">
@@ -73,17 +69,35 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ place }) => {
 						<label>入住:</label>
 						<input
 							type="date"
-							value={booking.checkIn}
-							onChange={(ev) =>
-								setBooking({ ...booking, checkIn: ev.target.value })
-							}
+							min={currentDate}
+							value={format(new Date(booking.checkIn), "yyyy-MM-dd")}
+							onChange={(ev) => {
+								if (
+									isAfter(parseISO(ev.target.value), new Date(booking.checkOut))
+								) {
+									setBooking({
+										...booking,
+										checkIn: ev.target.value,
+										checkOut: addDays(new Date(ev.target.value), 1),
+									});
+								} else {
+									setBooking({
+										...booking,
+										checkIn: ev.target.value,
+									});
+								}
+							}}
 						/>
 					</div>
 					<div className="flex-1 px-4 py-3 md:border-l">
 						<label>退房:</label>
 						<input
 							type="date"
-							value={booking.checkOut}
+							value={format(new Date(booking.checkOut), "yyyy-MM-dd")}
+							min={
+								format(addDays(new Date(booking.checkIn), 1), "yyyy-MM-dd") ||
+								currentDate
+							}
 							onChange={(ev) =>
 								setBooking({ ...booking, checkOut: ev.target.value })
 							}

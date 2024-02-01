@@ -22,7 +22,7 @@ export default function PlacePage() {
 
 	if (!place) return "";
 
-	const perkItems = place.listSelection?.map((perk) => {
+	const perkItems = place.selection?.map((perk) => {
 		const perkData = servicesList.find((perkData) => perkData.name === perk);
 		return (
 			<PerkItem

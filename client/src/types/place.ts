@@ -16,4 +16,5 @@ export interface Place {
 	room: number;
 	bedroom: number;
 	landlord: string;
+	_id?: string;
 }

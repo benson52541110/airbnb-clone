@@ -3,7 +3,6 @@ import { Icon } from "@iconify/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { roomCategoryList } from "../data/PlaceFormData";
-import { v4 as uuidv4 } from "uuid";
 import "swiper/swiper-bundle.css";
 import "./Category.css";
 
@@ -36,7 +35,7 @@ const Category: React.FC<CategoryProps> = ({ onCategorySelect }) => {
 					},
 				}}
 			>
-				{roomCategoryList.map((slide, index: number) => (
+				{roomCategoryList.map((slide, index) => (
 					<SwiperSlide key={slide.id}>
 						<div
 							className="flex flex-col items-center justify-center h-full gap-1 text-center cursor-pointer"
