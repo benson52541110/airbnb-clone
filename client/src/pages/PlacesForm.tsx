@@ -219,7 +219,6 @@ export default function PlacesFormPage() {
 								<ListSelection
 									selectedItems={field.value}
 									title="roomType"
-									selected={field.value}
 									onChange={field.onChange}
 								/>
 							);
@@ -242,7 +241,6 @@ export default function PlacesFormPage() {
 									<ListSelection
 										selectedItems={field.value}
 										title="roomRange"
-										selected={field.value}
 										onChange={field.onChange}
 									/>
 								);
@@ -266,7 +264,6 @@ export default function PlacesFormPage() {
 									<ListSelection
 										selectedItems={field.value}
 										title="roomCategory"
-										selected={field.value}
 										onChange={field.onChange}
 									/>
 								);
