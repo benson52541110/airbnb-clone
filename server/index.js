@@ -26,7 +26,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(
 	cors({
 		credentials: true,
-		origin: "https://airbnb-clone-client-zeta.vercel.app",
+		origin: "https://cloneairbnb.jp.ngrok.io",
 	})
 );
 
@@ -113,12 +113,7 @@ app.post("/api/login", async (req, res) => {
 						if (err) {
 							res.status(500).json({ error: "Error generating token" });
 						} else {
-							res
-								.cookie("token", token, {
-									httpOnly: true,
-									path: "/",
-								})
-								.json({ userData: userDoc, token: token });
+							res.cookie("token", token).json(userDoc);
 						}
 					}
 				);

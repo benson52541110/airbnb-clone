@@ -25,12 +25,10 @@ const LoginPage: React.FC = () => {
 	const handleLoginSubmit = async (formData: LoginForm) => {
 		const { email, password } = formData;
 		try {
-			const { userData, token } = await axios.post("/login", {
+			const { data: userData } = await axios.post("/login", {
 				email,
 				password,
 			});
-			document.cookie = `token=${token}; path:/ secure; samesite=none`;
-
 			dispatch(setUser(userData));
 			dispatch(showNotification({ type: "success", message: "登入成功" }));
 			setRedirect(true);
