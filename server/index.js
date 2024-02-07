@@ -116,12 +116,23 @@ app.post("/api/login", async (req, res) => {
 							res
 								.cookie("token", token, {
 									httpOnly: true,
+									sameSite: "None",
+									secure: true,
 									domain:
 										process.env.NODE_ENV === "development"
 											? ".localhost"
 											: ".vercel.app",
 								})
 								.json(userDoc);
+
+							res.setHeader(
+								"Set-Cookie",
+								`token=${token}; HttpOnly; SameSite=None; Secure; Domain=${
+									process.env.NODE_ENV === "development"
+										? ".localhost"
+										: ".vercel.app"
+								}`
+							);
 						}
 					}
 				);
