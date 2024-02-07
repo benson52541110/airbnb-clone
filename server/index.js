@@ -118,7 +118,7 @@ app.post("/api/login", async (req, res) => {
 									httpOnly: true,
 									path: "/",
 								})
-								.json(userDoc);
+								.json({ userDoc: userDoc, token: token });
 						}
 					}
 				);
