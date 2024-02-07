@@ -120,8 +120,9 @@ app.post("/api/login", async (req, res) => {
 									secure: true,
 									domain:
 										process.env.NODE_ENV === "development"
-											? ".localhost"
-											: ".vercel.app",
+											? "localhost"
+											: "vercel.app",
+									path: "/",
 								})
 								.json(userDoc);
 
@@ -129,9 +130,9 @@ app.post("/api/login", async (req, res) => {
 								"Set-Cookie",
 								`token=${token}; HttpOnly; SameSite=None; Secure; Domain=${
 									process.env.NODE_ENV === "development"
-										? ".localhost"
-										: ".vercel.app"
-								}`
+										? "localhost"
+										: "vercel.app"
+								} path=/`
 							);
 						}
 					}
