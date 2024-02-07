@@ -121,8 +121,7 @@ app.post("/api/login", async (req, res) => {
 									domain:
 										process.env.NODE_ENV === "development"
 											? "localhost"
-											: "vercel.app",
-									path: "/",
+											: "airbnb-clone-client-zeta.vercel.app",
 								})
 								.json(userDoc);
 
@@ -131,8 +130,8 @@ app.post("/api/login", async (req, res) => {
 								`token=${token}; HttpOnly; SameSite=None; Secure; Domain=${
 									process.env.NODE_ENV === "development"
 										? "localhost"
-										: "vercel.app"
-								} path=/`
+										: "airbnb-clone-client-zeta.vercel.app"
+								};path:/ `
 							);
 						}
 					}
