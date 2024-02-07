@@ -113,7 +113,15 @@ app.post("/api/login", async (req, res) => {
 						if (err) {
 							res.status(500).json({ error: "Error generating token" });
 						} else {
-							res.cookie("token", token).json(userDoc);
+							res
+								.cookie("token", token, {
+									httpOnly: true,
+									domain:
+										process.env.NODE_ENV === "development"
+											? ".localhost"
+											: ".vercel.app",
+								})
+								.json(userDoc);
 						}
 					}
 				);
