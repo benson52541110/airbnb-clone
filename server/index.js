@@ -26,7 +26,8 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(
 	cors({
 		credentials: true,
-		origin: "https://cloneairbnb.ngrok.io",
+		origin:
+			"https://airbnb-clone-client-gcw3jpfy8-benson52541110s-projects.vercel.app",
 	})
 );
 
