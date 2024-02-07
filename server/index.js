@@ -116,22 +116,9 @@ app.post("/api/login", async (req, res) => {
 							res
 								.cookie("token", token, {
 									httpOnly: true,
-									domain:
-										process.env.NODE_ENV === "development"
-											? "localhost"
-											: "airbnb-clone-client-zeta.vercel.app",
 									path: "/",
 								})
 								.json(userDoc);
-
-							res.setHeader(
-								"Set-Cookie",
-								`token=${token}; HttpOnly; Domain=${
-									process.env.NODE_ENV === "development"
-										? "localhost"
-										: "airbnb-clone-client-zeta.vercel.app"
-								};path:/ `
-							);
 						}
 					}
 				);
