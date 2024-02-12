@@ -2,9 +2,19 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { hideNotification } from "../state/slices/notificationSlice";
 
-function Notification() {
+interface NotificationState {
+	visible: boolean;
+	message: string;
+	type: "success" | "error";
+}
+
+interface RootState {
+	notification: NotificationState;
+}
+
+const Notification: React.FC = () => {
 	const dispatch = useDispatch();
-	const notification = useSelector((state) => state.notification);
+	const notification = useSelector((state: RootState) => state.notification);
 
 	useEffect(() => {
 		if (notification.visible) {
@@ -37,6 +47,6 @@ function Notification() {
 			{notification.message}
 		</div>
 	);
-}
+};
 
 export default Notification;

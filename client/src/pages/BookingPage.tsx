@@ -3,16 +3,20 @@ import { useEffect, useState } from "react";
 import AddressLink from "../components/AddressLink";
 import PlaceGallery from "../components/PlaceGallery";
 import BookingDates from "../components/BookingDates";
+import { Booking } from "../types/booking";
 import axios from "../utils/axios";
 
-export default function BookingPage() {
-	const { id } = useParams();
-	const [booking, setBooking] = useState(null);
+const BookingPage: React.FC = () => {
+	const { id } = useParams<{ id: string }>();
+	const [booking, setBooking] = useState<Booking | null>(null);
 
 	useEffect(() => {
 		if (id) {
 			axios.get("/bookings").then((response) => {
-				const foundBooking = response.data.find(({ _id }) => _id === id);
+				console.log(response.data);
+				const foundBooking = response.data.find(
+					(booking: Booking) => booking._id === id
+				);
 				if (foundBooking) {
 					setBooking(foundBooking);
 				}
@@ -27,7 +31,7 @@ export default function BookingPage() {
 	return (
 		<div className="my-8">
 			<h1 className="text-3xl">{booking.place.title}</h1>
-			<AddressLink className="block my-2">{booking.place.address}</AddressLink>
+			<AddressLink>{booking.place.address}</AddressLink>
 			<div className="flex items-center justify-between p-6 my-6 bg-gray-200 rounded-2xl">
 				<div>
 					<h2 className="mb-4 text-2xl">您的訂房資訊:</h2>
@@ -41,4 +45,6 @@ export default function BookingPage() {
 			<PlaceGallery place={booking.place} />
 		</div>
 	);
-}
+};
+
+export default BookingPage;

@@ -3,19 +3,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../state/slices/userSlice.js";
 import { Icon } from "@iconify/react";
-import axios from "../utils/axios";
+import axios from "../utils/axios.js";
 
 export default function Header() {
 	const { user } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
-
-	const handleCloseModal = (e) => {
-		if (isModalOpen) {
-			setIsModalOpen(false);
-		}
-	};
 
 	async function logout() {
 		await axios.post("/logout");
@@ -24,10 +18,7 @@ export default function Header() {
 	}
 
 	return (
-		<header
-			className="flex items-center justify-center w-full h-20 border-b md:justify-between"
-			onClick={handleCloseModal}
-		>
+		<header className="flex items-center justify-center w-full h-20 border-b md:justify-between">
 			<Link to={"/"} className="flex items-center gap-1">
 				<Icon icon="logos:airbnb-icon" className="hidden w-8 h-8 md:block" />
 				<span className="hidden text-2xl font-medium text-red-500 xl:inline">
@@ -46,12 +37,12 @@ export default function Header() {
 			</div>
 			<div
 				className="relative items-center hidden gap-2 px-4 py-2 border border-gray-300 rounded-full md:flex"
-				onClick={() => setIsModalOpen(true)}
+				onClick={() => setIsModalOpen(!isModalOpen)}
 			>
 				<Icon icon="quill:hamburger" />
 				{isModalOpen && !!user && (
 					<div
-						tabIndex="-1"
+						tabIndex={-1}
 						aria-hidden="true"
 						className="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
 					>
@@ -88,7 +79,7 @@ export default function Header() {
 				)}
 				{isModalOpen && !user && (
 					<div
-						tabIndex="-1"
+						tabIndex={-1}
 						aria-hidden="true"
 						className="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
 					>

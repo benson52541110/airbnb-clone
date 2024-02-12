@@ -6,12 +6,33 @@ import {
 	roomCategoryList,
 } from "../data/PlaceFormData";
 
-export default function ListSelection({
+interface ListTypes {
+	services: ListItem[];
+	roomRange: ListItem[];
+	roomType: ListItem[];
+	roomCategory: ListItem[];
+}
+
+interface ListItem {
+	name: string;
+	icon: string;
+	text: string;
+	id: string;
+}
+
+interface ListSelectionProps {
+	selectedItems: string[];
+	onChange: (newSelectedItems: string[] | null) => void; // 回調函數的類型
+	title: keyof ListTypes;
+	isMultiSelect?: boolean;
+}
+
+const ListSelection: React.FC<ListSelectionProps> = ({
 	selectedItems,
 	onChange,
 	title,
 	isMultiSelect = false,
-}) {
+}) => {
 	const listTypes = {
 		services: servicesList,
 		roomRange: roomRangeList,
@@ -19,7 +40,7 @@ export default function ListSelection({
 		roomCategory: roomCategoryList,
 	};
 
-	function handleCbClick(ev) {
+	function handleCbClick(ev: React.ChangeEvent<HTMLInputElement>) {
 		const { checked, name } = ev.target;
 		if (isMultiSelect) {
 			if (checked) {
@@ -30,7 +51,7 @@ export default function ListSelection({
 			return;
 		} else {
 			if (checked) {
-				onChange(name);
+				onChange([name]);
 			} else {
 				onChange(null);
 			}
@@ -46,14 +67,12 @@ export default function ListSelection({
 					name={item.name}
 					icon={item.icon}
 					text={item.text}
-					isSelected={
-						isMultiSelect
-							? selectedItems.includes(item.name)
-							: selectedItems === item.name
-					}
+					isSelected={selectedItems?.includes(item.name)}
 					onCbClick={handleCbClick}
 				/>
 			))}
 		</>
 	);
-}
+};
+
+export default ListSelection;

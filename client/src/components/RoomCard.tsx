@@ -2,10 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
-import Modal from "../components/UI/Modal.jsx";
-import Image from "../components/Image.jsx";
-import Favorite from "./UI/Favorite.jsx";
-import axios from "../utils/axios.js";
+import Modal from "../components/UI/Modal";
+import Image from "../components/Image";
+import Favorite from "./UI/Favorite";
+import axios from "../utils/axios";
 
 export default function RoomCard({ places, url, title }) {
 	const [localPlaces, setLocalPlaces] = useState(places);

@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import Image from "../components/Image";
 import BookingDates from "../components/BookingDates";
 import axios from "../utils/axios";
+import { Booking } from "../types/booking";
 
-export default function BookingsPage() {
-	const [bookings, setBookings] = useState([]);
+const BookingsPage: React.FC = () => {
+	const [bookings, setBookings] = useState<Booking[]>([]);
 
 	useEffect(() => {
 		axios.get("/bookings").then((response) => {
@@ -14,8 +15,8 @@ export default function BookingsPage() {
 		});
 	}, []);
 
-	const deleteBooking = (event, bookingId) => {
-		event.stopPropagation();
+	const deleteBooking = (ev: React.MouseEvent, bookingId: string) => {
+		ev.stopPropagation();
 		axios
 			.delete(`/bookings/${bookingId}`)
 			.then(() => {
@@ -62,4 +63,6 @@ export default function BookingsPage() {
 				))}
 		</div>
 	);
-}
+};
+
+export default BookingsPage;

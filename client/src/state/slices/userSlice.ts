@@ -1,5 +1,24 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
+
+interface User {
+	id: string;
+	name: string;
+	email: string;
+	favorites: string[];
+}
+
+interface UserState {
+	user: User | null;
+	ready: boolean;
+	error: string | null | undefined;
+}
+
+const initialState: UserState = {
+	user: null,
+	ready: false,
+	error: null,
+};
 
 export const fetchUserProfile = createAsyncThunk(
 	"user/fetchUserProfile",
@@ -15,16 +34,12 @@ export const fetchUserProfile = createAsyncThunk(
 
 const userSlice = createSlice({
 	name: "user",
-	initialState: {
-		user: null,
-		ready: false,
-		error: null,
-	},
+	initialState,
 	reducers: {
-		setUser: (state, action) => {
+		setUser: (state, action: PayloadAction<User | null>) => {
 			state.user = action.payload;
 		},
-		setReady: (state, action) => {
+		setReady: (state, action: PayloadAction<boolean>) => {
 			state.ready = action.payload;
 		},
 	},
@@ -33,10 +48,13 @@ const userSlice = createSlice({
 			.addCase(fetchUserProfile.pending, (state) => {
 				state.ready = false;
 			})
-			.addCase(fetchUserProfile.fulfilled, (state, action) => {
-				state.user = action.payload;
-				state.ready = true;
-			})
+			.addCase(
+				fetchUserProfile.fulfilled,
+				(state, action: PayloadAction<User>) => {
+					state.user = action.payload;
+					state.ready = true;
+				}
+			)
 			.addCase(fetchUserProfile.rejected, (state, action) => {
 				state.error = action.payload;
 				state.ready = true;

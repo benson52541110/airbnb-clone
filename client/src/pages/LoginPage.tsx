@@ -2,22 +2,27 @@ import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../state/slices/userSlice.js";
+import { setUser } from "../state/slices/userSlice";
 import { showNotification } from "../state/slices/notificationSlice";
-import Notification from "../components/Notification.jsx";
-import axios from "../utils/axios.js";
+import Notification from "../components/Notification";
+import axios from "../utils/axios";
 
-export default function LoginPage() {
+interface LoginForm {
+	email: string;
+	password: string;
+}
+
+const LoginPage: React.FC = () => {
 	const {
 		handleSubmit,
 		control,
 		formState: { errors },
-	} = useForm();
+	} = useForm<LoginForm>();
 	const [redirect, setRedirect] = useState(false);
 	const dispatch = useDispatch();
 	const notification = useSelector((state) => state.notification);
 
-	async function handleLoginSubmit(formData) {
+	const handleLoginSubmit = async (formData: LoginForm) => {
 		const { email, password } = formData;
 		try {
 			const { data: userData } = await axios.post("/login", {
@@ -30,7 +35,7 @@ export default function LoginPage() {
 		} catch (e) {
 			dispatch(showNotification({ type: "error", message: "登入失敗" }));
 		}
-	}
+	};
 
 	if (redirect) {
 		return <Navigate to={"/"} />;
@@ -98,4 +103,6 @@ export default function LoginPage() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default LoginPage;

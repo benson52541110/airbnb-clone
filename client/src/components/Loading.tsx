@@ -10,7 +10,6 @@ function Loading() {
 				color="#FF000"
 				ariaLabel="three-dots-loading"
 				wrapperStyle={{}}
-				wrapperClassName=""
 				visible={true}
 			/>
 		</div>

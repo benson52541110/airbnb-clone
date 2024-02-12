@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import Category from "../components/Category.jsx";
-import RoomCard from "../components/RoomCard.jsx";
-import Loading from "../components/Loading.jsx";
-import axios from "../utils/axios.js";
+import Category from "../components/Category";
+import RoomCard from "../components/RoomCard";
+import Loading from "../components/Loading";
+import axios from "../utils/axios";
+import { Place } from "../types/place";
 
-export default function IndexPage() {
-	const [places, setPlaces] = useState([]);
+const IndexPage: React.FC = () => {
+	const [places, setPlaces] = useState<Place[]>([]);
 	const [selectedCategory, setSelectedCategory] = useState("greenhouse");
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -27,7 +28,6 @@ export default function IndexPage() {
 			) : (
 				<>
 					<Category
-						initialCategory="greenhouse"
 						onCategorySelect={(category) => setSelectedCategory(category)}
 					></Category>
 					<div className="grid grid-cols-1 mt-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-x-6 gap-y-8">
@@ -41,4 +41,6 @@ export default function IndexPage() {
 			)}
 		</>
 	);
-}
+};
+
+export default IndexPage;
